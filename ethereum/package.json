@@ -1,0 +1,19 @@
+{
+  "name": "hardhat-project",
+  "license": "MIT",
+  "scripts": {
+    "deploy-local": "npx hardhat run scripts/deploy.js --network localhost",
+    "deploy-rinkeby": "npx hardhat run scripts/deploy.js --network rinkeby",
+    "r": "npx hardhat run scripts/run.js",
+    "c": "npx hardhat compile",
+    "t": "npx hardhat test",
+    "start": "npx hardhat node",
+    "accounts": "npx hardhat accounts",
+    "clean": "npx hardhat clean",
+    "help": "npx hardhat help"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "hardhat": "^2.10.0"
+  }
+}
