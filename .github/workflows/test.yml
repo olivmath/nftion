@@ -26,6 +26,8 @@ jobs:
 
             - name: Install dependencies
               run: cd marketplace-off-chain && yarn install -D
+
+            - name: Install dependencies
               run: cd marketplace-on-chain && yarn install -D
 
             - name: Test on-chain
