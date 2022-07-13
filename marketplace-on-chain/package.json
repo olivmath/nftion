@@ -27,6 +27,7 @@
     "hardhat": "^2.10.0",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.7.21",
+    "ts-node": "^10.8.2",
     "typechain": "^8.1.0",
     "typescript": "^4.7.4"
   },
