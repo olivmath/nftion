@@ -1,5 +1,5 @@
-tabWidth: 4
-semi: false
+quoteProps: consistent
 trailingComma: none
 singleQuote: false
-quoteProps: consistent
+tabWidth: 4
+semi: false
