@@ -66,8 +66,8 @@ The off-chain system must be written in Node.js and it should not use any persis
 
 ## Iterate
 
-- [ ] Write, Test, Deploy ERC20 contract.
-- [ ] Write off-chain post bids.
+- [x] Write, Test, Deploy ERC20 contract.
+- [x] Write off-chain post bids.
 - [ ] Write, Test, Deploy ERC721 contract
 - [ ] Write off-chain post NFT.
 - [ ] Write, Test, Deploy Matcher contract
