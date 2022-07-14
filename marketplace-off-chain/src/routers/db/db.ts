@@ -6,10 +6,12 @@ export class Bid {
     bid: number
 
     constructor(signature: string, addr: string, bid: number) {
+        // validate signature before instantiate this class
         if(!this.signatureValidate(signature, addr, bid.toString())){
             throw new Error("Signature not valid");
         }
-        // validate signature before instantiate this class
+        // todo: validate approved by contract
+
         this.signature = signature
         this.addr = addr
         this.bid = bid
