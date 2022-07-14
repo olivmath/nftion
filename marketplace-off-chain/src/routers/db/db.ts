@@ -1,12 +1,27 @@
+import { ethers } from "ethers"
+
 export class Bid {
     signature: string
     addr: string
     bid: number
 
-    constructor(addr: string, bid: number, signature: string) {
+    constructor(signature: string, addr: string, bid: number) {
+        if(!this.signatureValidate(signature, addr, bid.toString())){
+            throw new Error("Signature not valid");
+        }
+        // validate signature before instantiate this class
         this.signature = signature
         this.addr = addr
         this.bid = bid
+    }
+
+    signatureValidate(signature: string, addr: string, message: string): boolean {
+        // if(ethers.utils.verifyMessage(message, signature) == addr) {
+        //     return true
+        // } else {
+        //     return false
+        // }
+        return true
     }
 }
 
@@ -16,13 +31,12 @@ export class Auction {
     nftId: string
 
     constructor(nftId: string, initPrice: number) {
-        this.bids = [new Bid("", 0, "")]
+        this.bids = [new Bid("", "", initPrice)]
         this.initPrice = initPrice
         this.nftId = nftId
     }
 
-    addNewBid(addr: string, bid: number, signature: string) {
-        const newBid = new Bid(addr, bid, signature)
+    addNewBid(newBid: Bid) {
         const currentBid = this.bids[0]
 
         if (currentBid.bid >= newBid.bid) {
