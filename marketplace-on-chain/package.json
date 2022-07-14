@@ -6,11 +6,12 @@
     "c": "npx hardhat compile",
     "t": "npx hardhat test",
     "d": "npx hardhat run scripts/deploy.ts",
+    "transfer": "npx hardhat run scripts/transfer.ts",
+    "console": "npx hardhat console",
     "deploy-local": "npx hardhat run scripts/deploy.ts --network localhost",
     "deploy-rinkeby": "npx hardhat run scripts/deploy.ts --network rinkeby",
     "accounts": "npx hardhat accounts",
-    "clean": "npx hardhat clean",
-    "help": "npx hardhat help"
+    "h-help": "npx hardhat help"
   },
   "devDependencies": {
     "@ethersproject/abi": "^5.6.4",

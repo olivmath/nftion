@@ -22,22 +22,24 @@
 //   process.exitCode = 1;
 // });
 
-
 const hre = require("hardhat");
 
-async function main() {
+async function deploy() {
+  console.log("🕐 Deploying smart-contract...")
+  const [owner, addr1] = await hre.ethers.getSigners();
+  const initBalance = await owner.getBalance();
 
-  const Lua = await hre.ethers.getContractFactory("Lua");
-  console.log('Deploying Lua...');
-  const token = await Lua.deploy('10000000000000000000000');
+  const contractFactory = await hre.ethers.getContractFactory("Lua");
+  const deployedContract = await contractFactory.deploy(100);
 
-  await token.deployed();
-  console.log("Lua deployed to:", token.address);
-}
+  const endBalance = await owner.getBalance();
+  console.log(`✅ Contract Deployed Address: ${deployedContract.address}`)
+  console.log(`🔑 Contract Owner: ${owner.address}`)
+  console.log(`💸 Deploy spend: ${(initBalance - endBalance) / 1e18} ethers`)
+};
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+
+deploy().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
