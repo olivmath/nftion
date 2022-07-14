@@ -9,10 +9,8 @@
 1. [💬 Understand Problem](#understand-problem)
 2. [🎲 Collect Data and References](#collect-data-and-references)
 3. [🖍 Design Solution](#design-solution)
-4. [✅ Write Tests for Solution (TDD)](#write-tests-for-solution-tdd)
-
-5. [🏗 Write Solution](#write-solution)
-6. [🔄 Iterate](#iterate)
+4. [✅ Write Tests and Solution (TDD)](#write-tests-and-solution-tdd)
+5. [🔄 Iterate](#iterate)
 
 ## Understand Problem
 
@@ -61,9 +59,21 @@ The off-chain system must be written in Node.js and it should not use any persis
 - 🕑 https://learn.questbook.xyz
 
 ## Design Solution
-![Design](/assets/design.png)
-## Write Tests for Solution (TDD)
 
-## Write Solution
+![Design](/assets/design.png)
+
+## Write Tests and Solution (TDD)
 
 ## Iterate
+
+- [ ] Write, Test, Deploy ERC20 contract.
+- [ ] Write off-chain post bids.
+- [ ] Write, Test, Deploy ERC721 contract
+- [ ] Write off-chain post NFT.
+- [ ] Write, Test, Deploy Matcher contract
+- [ ] Plug off-chain in on-chain App.
+- [ ] Enable single auction
+- [ ] Deploy App with Docker-Compose
+- [ ] Enable multiple auctions
+- [ ] Deploy App with Kubernetes for more scalability
+- [ ] Change to Actors Models for more scalability
