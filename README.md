@@ -4,7 +4,17 @@
 [![Off-chain](https://github.com/olivmath/senior-blockchain-engineer-test/actions/workflows/off-chain.yml/badge.svg?branch=main)](https://github.com/olivmath/senior-blockchain-engineer-test/actions/workflows/off-chain.yml)
 [![On-chain](https://github.com/olivmath/senior-blockchain-engineer-test/actions/workflows/on-chain.yml/badge.svg?branch=main)](https://github.com/olivmath/senior-blockchain-engineer-test/actions/workflows/on-chain.yml)
 
-## 1° - Understand Problem
+## Table of Contents
+
+1. [Understand Problem](#understand-problem)
+2. [Collect Data and References](#collect-data-and-references)
+3. [Design Solution](#design-solution)
+4. [Write Tests for Solution (TDD)](#write-tests-for-solution-tdd)
+
+5. [Write Solution](#write-solution)
+6. [Iterate](#iterate)
+
+## 💬 Understand Problem
 
 _Cheap NFT Marketplace_
 
@@ -21,7 +31,7 @@ The auctions should work as follows
 
 The off-chain system must be written in Node.js and it should not use any persisent storage (all created listings and bids should be stored in memory). It should also support an HTTP interface using express.js to fetch the live listings, bids, and signatures at any given time. The on-chain system should be developed using truffle or hardhat, with a solidity version greater or equal than 0.8
 
-## 2° - Collect Data/References
+## 🎲 Collect Data and References
 
 - 💩 https://www.linkedin.com/pulse/how-create-nft-marketplace-polygon-codezeros/?trk=organization-update-content_share-article
 - ✅ https://etherscan.io/address/0x354EF538265426d223A5faae68C9b0795f0541D9#code
@@ -50,10 +60,10 @@ The off-chain system must be written in Node.js and it should not use any persis
 - 🕑 https://buildspace.so/projects
 - 🕑 https://learn.questbook.xyz
 
-## 3° - Design Solution
+## 🖍 Design Solution
 
-## 4° - Write Tests for Solution (TDD)
+## ✅ Write Tests for Solution (TDD)
 
-## 5° - Write Solution
+## 🏗 Write Solution
 
-## 6° - Iterate
+## 🔄 Iterate
