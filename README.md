@@ -61,7 +61,7 @@ The off-chain system must be written in Node.js and it should not use any persis
 - 🕑 https://learn.questbook.xyz
 
 ## Design Solution
-
+![Design](/assets/design.png)
 ## Write Tests for Solution (TDD)
 
 ## Write Solution
