@@ -1,9 +1,9 @@
 import express from "express"
-import { hello } from "./routers/hello"
+import { openAuctions } from "./routers/auctions"
 
 const app = express()
 
 app.use(express.json())
-app.use(hello)
+app.use(openAuctions)
 
 export { app }
