@@ -22,24 +22,23 @@
 //   process.exitCode = 1;
 // });
 
-const hre = require("hardhat");
+const hre = require("hardhat")
 
 async function deploy() {
-  console.log("🕐 Deploying smart-contract...")
-  const [owner, addr1] = await hre.ethers.getSigners();
-  const initBalance = await owner.getBalance();
+    console.log("🕐 Deploying smart-contract...")
+    const [owner, addr1] = await hre.ethers.getSigners()
+    const initBalance = await owner.getBalance()
 
-  const contractFactory = await hre.ethers.getContractFactory("Lua");
-  const deployedContract = await contractFactory.deploy(100);
+    const contractFactory = await hre.ethers.getContractFactory("Lua")
+    const deployedContract = await contractFactory.deploy(100)
 
-  const endBalance = await owner.getBalance();
-  console.log(`✅ Contract Deployed Address: ${deployedContract.address}`)
-  console.log(`🔑 Contract Owner: ${owner.address}`)
-  console.log(`💸 Deploy spend: ${(initBalance - endBalance) / 1e18} ethers`)
-};
-
+    const endBalance = await owner.getBalance()
+    console.log(`✅ Contract Deployed Address: ${deployedContract.address}`)
+    console.log(`🔑 Contract Owner: ${owner.address}`)
+    console.log(`💸 Deploy spend: ${(initBalance - endBalance) / 1e18} ethers`)
+}
 
 deploy().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+    console.error(error)
+    process.exitCode = 1
+})
