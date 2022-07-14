@@ -46,17 +46,17 @@ The off-chain system must be written in Node.js and it should not use any persis
 - 🕑 https://academy.binance.com/en/articles/how-to-make-your-own-nfts
 - 🕑 https://quadrabyte.net/how-to-build-an-nft-marketplace-on-chain/
 - 🕑 https://trufflesuite.com/guides/nft-marketplace/
-- 🕑 https://github.com/ethereum/EIPs/issues/5102
+- ✅ https://github.com/ethereum/EIPs/issues/5102
 - 🕑 https://www.youtube.com/watch?v=bBQif9IM9Fw
 - 🕑 https://www.youtube.com/watch?v=2bjVWclBD_s
 - 🕑 https://www.youtube.com/watch?v=kMnfCUvJnHo
 - 🕑 https://www.youtube.com/watch?v=nOfFeRZg9oE
 - 🕑 https://www.youtube.com/watch?v=7Q5E6RvLlUw
-- 🕑 https://pt.wikipedia.org/wiki/Leilão
-- 🕑 https://www.chainshot.com/courses
-- 🕑 https://www.pointer.gg/tutorials
-- 🕑 https://buildspace.so/projects
-- 🕑 https://learn.questbook.xyz
+- ✅ https://pt.wikipedia.org/wiki/Leilão
+- ✅  https://www.chainshot.com/courses
+- ✅  https://www.pointer.gg/tutorials
+- ✅  https://buildspace.so/projects
+- 💩 https://learn.questbook.xyz
 
 ## Design Solution
 
