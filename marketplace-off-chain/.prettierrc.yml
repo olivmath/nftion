@@ -1,3 +1,5 @@
 tabWidth: 4
 semi: false
 trailingComma: none
+singleQuote: false
+quoteProps: consistent
