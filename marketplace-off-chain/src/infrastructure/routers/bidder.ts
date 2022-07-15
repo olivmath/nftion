@@ -11,7 +11,8 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
                 addNewBid(
                     request.body.signature,
                     request.body.bidder,
-                    request.body.bid
+                    request.body.bid,
+                    request.params.nftId
                 )
             )
     } catch (e) {

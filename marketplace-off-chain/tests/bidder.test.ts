@@ -22,7 +22,7 @@ describe("Bidder routes", () => {
             })
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
-            yourBid: 0
+            yourBidIndex: 0
         })
     })
     test("/bid/{nftId} 404 | should be fail if bid for less than the current bid", async () => {
