@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals"
-import { app } from "../src/app"
+import { app } from "../src/infrastructure/app"
 import request from "supertest"
 import { ethers } from "ethers"
 
