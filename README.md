@@ -60,17 +60,20 @@ The off-chain system must be written in Node.js and it should not use any persis
 
 ## Design Solution
 
+_Project_
 ![Design](/assets/design.png)
 
+_Application_
+![Application](/assets/archtecture.png)
 ## Write Tests and Solution (TDD)
 
 ## Iterate
 
-- [x] Write, Test, Deploy ERC20 contract.
+- [x] Write, Test, Deploy ERC20 contract on Ropsten.
 - [x] Write, Test off-chain post bids.
-- [ ] Write, Test, Deploy ERC721 contract
+- [ ] Write, Test, Deploy ERC721 contract on Ropsten.
 - [x] Write, Test off-chain post NFT.
-- [ ] Write, Test, Deploy Matcher contract
+- [ ] Write, Test, Deploy Matcher contract on Ropsten.
 - [ ] Plug off-chain in on-chain App.
 - [ ] Deploy App with Docker-Compose
 
