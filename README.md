@@ -73,11 +73,11 @@ _Application_
 
 ## Iterate
 
-- [x] Write, Test, Deploy ERC20 contract on Ropsten.
+- [x] Write, Test, Deploy ERC20 contract on Local.
 - [x] Write, Test off-chain post bids.
-- [ ] Write, Test, Deploy ERC721 contract on Ropsten.
+- [ ] Write, Test, Deploy ERC721 contract on Local.
 - [x] Write, Test off-chain post NFT.
-- [ ] Write, Test, Deploy Matcher contract on Ropsten.
+- [ ] Write, Test, Deploy Matcher contract on Local.
 - [ ] Plug off-chain in on-chain App.
 - [ ] Deploy App with Docker-Compose.
 
