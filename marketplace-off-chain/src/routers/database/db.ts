@@ -1,15 +1,23 @@
 import { Auction } from "./controler"
-import { ethers } from "ethers"
 
 // Mock NFT seller
-const seller = new ethers.Wallet("0x7205b57037a379056f95dda13e8c71ebfc3a7fdaa8e6ad29fe7a104e68d2d466")
-const initialPrice = 10
-const nftId = "0xff"
-const signature0xff = await seller.signMessage(initialPrice.toString())
-const signature0xaa = await seller.signMessage(initialPrice.toString())
+const seller = {
+    addr: "0x3A68dD01B4B118b07b3d018fD149Dc0D41097f75",
+    initialPrice: 10
+}
 
-const duckAuction = new Auction(seller.address, nftId, initialPrice, signature0xff)
-const monkeyAuction = new Auction(seller.address, "0xaa", initialPrice, signature0xaa)
+const duckAuction = new Auction(
+    seller.addr,
+    "0xff",
+    seller.initialPrice,
+    "0x6940fc5db660efb51e7943a987f65fa75b3e470ebc7e4979fcec080b8bff33462cc872fd72aaa6014966fd99a33f9bb13f49df46fa606e27e6d8483721bda3041c"
+)
+const monkeyAuction = new Auction(
+    seller.addr,
+    "0xaa",
+    seller.initialPrice + 10,
+    "0x7ca8fa404f3e79535747cc5e8a6895343761c8b70b3018b1bebd5abe6d2b00bb3de55d04449d2316d4baeab0b34eaced4aa51c4d8dd0e19694688b24bf7d3e5f1b"
+)
 
 export const allAuctions = {
     open: [duckAuction],

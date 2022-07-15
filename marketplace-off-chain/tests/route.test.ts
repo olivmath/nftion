@@ -1,3 +1,4 @@
+import { describe, expect, test } from "@jest/globals"
 import { app } from "../src/app"
 import request from "supertest"
 import { ethers } from "ethers"
@@ -17,9 +18,17 @@ describe("GET routes", () => {
         const response = await request(app).get("/0xff")
         expect(response.status).toEqual(200)
         expect(response.body).toEqual({
+            seller: "0x3A68dD01B4B118b07b3d018fD149Dc0D41097f75",
             nftId: "0xff",
             initPrice: 10,
-            bids: [{ signature: "", addr: "", bid: 10 }]
+            bids: [
+                {
+                    signature:
+                        "0x6940fc5db660efb51e7943a987f65fa75b3e470ebc7e4979fcec080b8bff33462cc872fd72aaa6014966fd99a33f9bb13f49df46fa606e27e6d8483721bda3041c",
+                    addr: "0x3A68dD01B4B118b07b3d018fD149Dc0D41097f75",
+                    bid: 10
+                }
+            ]
         })
     })
     test("/{nftId} - 202 | should be return fail if `0xaa` NFT Auction is closed", async () => {
@@ -39,7 +48,9 @@ describe("GET routes", () => {
 })
 
 describe("POST routes", () => {
-    const bidder1 = new ethers.Wallet("0xc12d5fd82e11119cb6fdeaac20ad8b255fdb208b36d557dd816e2bfd8d831e0b")
+    const bidder1 = new ethers.Wallet(
+        "0xc12d5fd82e11119cb6fdeaac20ad8b255fdb208b36d557dd816e2bfd8d831e0b"
+    )
     const signMessage = async (msg: number) => {
         const signed = await bidder1.signMessage(msg.toString())
         return signed
@@ -69,7 +80,7 @@ describe("POST routes", () => {
             })
         expect(response.status).toEqual(404)
         expect(response.body).toEqual({
-            "message": "1 is less than that initial price: 10"
+            message: "1 is less than that initial price: 10"
         })
     })
 })

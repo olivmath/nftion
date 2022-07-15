@@ -7,9 +7,7 @@ export class Bid {
 
     constructor(signature: string, addr: string, bid: number) {
         // validate signature before instantiate this class
-        if(!this.signatureValidate(signature, addr, bid.toString())){
-            throw new Error("Signature not valid");
-        }
+        this.signatureValidate(signature, addr, bid.toString())
         // todo: validate approved by contract
 
         this.signature = signature
@@ -17,11 +15,15 @@ export class Bid {
         this.bid = bid
     }
 
-    signatureValidate(signature: string, addr: string, message: string): boolean {
-        if(ethers.utils.verifyMessage(message, signature) == addr) {
+    signatureValidate(
+        signature: string,
+        addr: string,
+        message: string
+    ): boolean {
+        if (ethers.utils.verifyMessage(message, signature) == addr) {
             return true
         } else {
-            return false
+            throw new Error("Signature not valid")
         }
     }
 }
@@ -32,7 +34,12 @@ export class Auction {
     nftId: string
     seller: string
 
-    constructor(seller: string, nftId: string, initPrice: number, signature: string) {
+    constructor(
+        seller: string,
+        nftId: string,
+        initPrice: number,
+        signature: string
+    ) {
         this.bids = [new Bid(signature, seller, initPrice)]
         this.initPrice = initPrice
         this.seller = seller
@@ -49,4 +56,3 @@ export class Auction {
         }
     }
 }
-

@@ -4,7 +4,7 @@ module.exports = {
     reporters: ["default", "jest-junit"],
     rootDir: root,
     displayName: "based-tests",
-    testMatch: ["<rootDir>/test/**/*.test.ts"],
+    testMatch: ["<rootDir>/tests/**/*.test.ts"],
     testEnvironment: "node",
     preset: "ts-jest"
 }

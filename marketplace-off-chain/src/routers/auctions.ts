@@ -49,7 +49,7 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
         request.body.signature,
         request.body.addr,
         request.body.bid
-        )
+    )
     if (nftStatus(nftId) == "open") {
         const nftAuction: Auction = allAuctions.open.filter(
             (auction) => auction.nftId == nftId
@@ -61,7 +61,9 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
         } else {
             nftAuction.addNewBid(receivedBid)
             return response.status(201).json({
-                yourBid: nftAuction.bids.findIndex(bid => bid.addr == receivedBid.addr)
+                yourBid: nftAuction.bids.findIndex(
+                    (bid) => bid.addr == receivedBid.addr
+                )
             })
         }
     } else {
