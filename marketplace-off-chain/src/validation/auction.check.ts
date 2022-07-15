@@ -40,11 +40,6 @@ export const findAuction = (nftId: string) => {
     if (auction.status != "open") {
         throw new Error(`${nftId} is already closed or not found`)
     } else {
-        return {
-            seller: auction.response.auction.seller,
-            nftId: auction.response.auction.nftId,
-            initPrice: auction.response.auction.initPrice,
-            bids: auction.response.auction.bids
-        }
+        return auction.response.auction
     }
 }

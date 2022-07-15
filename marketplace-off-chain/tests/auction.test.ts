@@ -34,7 +34,7 @@ describe("Auction routes", () => {
         const response = await request(app).get("/0xaa")
         expect(response.status).toEqual(404)
         expect(response.body).toEqual({
-            message: "0xaa is already closed or not found",
+            message: "0xaa is already closed or not found"
         })
     })
     test("/{nftId} - 404 | should be return fail if `0xaa` NFT Auction is not found", async () => {

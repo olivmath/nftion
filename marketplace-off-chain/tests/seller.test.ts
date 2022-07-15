@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals"
-import { app } from "../src/app"
+import { app } from "../src/infrastructure/app"
 import request from "supertest"
 import { ethers } from "ethers"
 
@@ -37,7 +37,7 @@ describe("Seller routes", () => {
         })
     })
 
-    test("POST /auction/{nftId} 201 | should be delete a acution", async () => {
+    test("POST /auction/{nftId} 201 | should be delete a auction", async () => {
         const open = await request(app).get("/open")
         expect(open.status).toEqual(200)
         expect(open.body.includes("0xff")).toEqual(true)
@@ -49,11 +49,16 @@ describe("Seller routes", () => {
             .delete("/auction/0xff")
             .send({
                 seller: seller.address,
-                signature: await signMessage("0xac")
+                initPrice: 10,
+                signature: await signMessage("10")
             })
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
-            message: "0xff closed"
+            seller: "0xFe32CA2F5278514AAeB6B46Dadb0282f1B916EbA",
+            bidder: "0xFe32CA2F5278514AAeB6B46Dadb0282f1B916EbA",
+            nftId: "0xff",
+            initPrice: 10,
+            endPrice: 10
         })
 
         const openAfter = await request(app).get("/open")

@@ -31,15 +31,19 @@ export const addNewBid = (
     validateSignature(signature, bid.toString(), bidder)
 
     const nftAuction = findAuction(nftId)
-    const maxBid = Math.max(...nftAuction.bids.map(bid => bid.bid))
+    const maxBid = Math.max(...nftAuction.bids.map((bid) => bid.bid))
 
     if (maxBid > bid) {
-        throw new Error(`${bid} is less than that initial price: ${nftAuction.initPrice}`)
+        throw new Error(
+            `${bid} is less than that initial price: ${nftAuction.initPrice}`
+        )
     }
     const receivedBid = new Bid(signature, bidder, bid)
     nftAuction.addNewBid(receivedBid)
     return {
-        yourBidIndex: nftAuction.bids.findIndex((bid) => bid.addr == receivedBid.addr)
+        yourBidIndex: nftAuction.bids.findIndex(
+            (bid) => bid.addr == receivedBid.addr
+        )
     }
 }
 

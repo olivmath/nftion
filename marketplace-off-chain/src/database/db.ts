@@ -1,4 +1,4 @@
-import { Auction } from "./controler"
+import { Auction } from "../models/auction"
 
 // Mock NFT seller
 const seller = {
