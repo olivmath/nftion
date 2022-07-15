@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { allAuctions } from "./db/ controler"
-import { Auction, Bid } from "./db/db"
+import { Auction, Bid } from "./database/controler"
+import { allAuctions } from "./database/db"
 
 const router = Router()
 
@@ -49,7 +49,7 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
         request.body.signature,
         request.body.addr,
         request.body.bid
-    )
+        )
     if (nftStatus(nftId) == "open") {
         const nftAuction: Auction = allAuctions.open.filter(
             (auction) => auction.nftId == nftId

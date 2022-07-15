@@ -39,9 +39,10 @@ describe("GET routes", () => {
 })
 
 describe("POST routes", () => {
-    const bidder1 = ethers.Wallet.createRandom("0x123")
+    const bidder1 = new ethers.Wallet("0xc12d5fd82e11119cb6fdeaac20ad8b255fdb208b36d557dd816e2bfd8d831e0b")
     const signMessage = async (msg: number) => {
-        return (await bidder1.signMessage(msg.toString())).toString()
+        const signed = await bidder1.signMessage(msg.toString())
+        return signed
     }
     test("/bid/{nftId} 201 | should be return 0 if bid greater than the current bid", async () => {
         const bid = 100

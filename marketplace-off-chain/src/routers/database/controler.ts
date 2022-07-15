@@ -18,12 +18,11 @@ export class Bid {
     }
 
     signatureValidate(signature: string, addr: string, message: string): boolean {
-        // if(ethers.utils.verifyMessage(message, signature) == addr) {
-        //     return true
-        // } else {
-        //     return false
-        // }
-        return true
+        if(ethers.utils.verifyMessage(message, signature) == addr) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
@@ -31,10 +30,12 @@ export class Auction {
     initPrice: number
     bids: Array<Bid>
     nftId: string
+    seller: string
 
-    constructor(nftId: string, initPrice: number) {
-        this.bids = [new Bid("", "", initPrice)]
+    constructor(seller: string, nftId: string, initPrice: number, signature: string) {
+        this.bids = [new Bid(signature, seller, initPrice)]
         this.initPrice = initPrice
+        this.seller = seller
         this.nftId = nftId
     }
 
@@ -48,3 +49,4 @@ export class Auction {
         }
     }
 }
+
