@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { Auction, Bid } from "./database/controler"
-import { allAuctions } from "./database/db"
+import { Auction, Bid } from "../database/controler"
+import { allAuctions } from "../database/db"
 
 const router = Router()
 
-const nftStatus = (nftId: string) => {
+export const nftStatus = (nftId: string) => {
     const nftIsOpen = allAuctions.open.find((nft) => nft.nftId == nftId)
     const nftIsClosed = allAuctions.closed.find((nft) => nft.nftId == nftId)
 
@@ -43,53 +43,4 @@ const auctionsStatus = router.get("/:nftId", (request, response) => {
     }
 })
 
-const newBid = router.post("/bid/:nftId", (request, response) => {
-    const [signature, addr, bid] = [
-        request.body.signature,
-        request.body.addr,
-        request.body.bid
-    ]
-    if (signature == undefined || addr == undefined || bid == undefined) {
-        return response.status(404).json({
-            message: "not found params: `signature`, `addr`, `bid`"
-        })
-    }
-    const nftId = request.params.nftId
-    let receivedBid: Bid
-    try {
-        receivedBid = new Bid(signature, addr, bid)
-    } catch (e) {
-        return response.status(404).json({
-            message: (e as Error).message
-        })
-    }
-    if (nftStatus(nftId) == "open") {
-        const nftAuction: Auction = allAuctions.open.filter(
-            (auction) => auction.nftId == nftId
-        )[0]
-        if (nftAuction.initPrice > receivedBid.bid) {
-            return response.status(404).json({
-                message: `${receivedBid.bid} is less than that initial price: ${nftAuction.initPrice}`
-            })
-        } else {
-            try {
-                nftAuction.addNewBid(receivedBid)
-            } catch (e) {
-                return response.status(404).json({
-                    message: (e as Error).message
-                })
-            }
-            return response.status(201).json({
-                yourBid: nftAuction.bids.findIndex(
-                    (bid) => bid.addr == receivedBid.addr
-                )
-            })
-        }
-    } else {
-        return response.status(404).json({
-            message: `${nftId} NFT Auction is not available`
-        })
-    }
-})
-
-export { openAuctions, closedAuctions, auctionsStatus, newBid }
+export { openAuctions, closedAuctions, auctionsStatus }

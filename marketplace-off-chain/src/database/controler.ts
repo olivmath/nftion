@@ -35,10 +35,10 @@ export class Auction {
     seller: string
 
     constructor(
-        seller: string,
-        nftId: string,
+        signature: string,
         initPrice: number,
-        signature: string
+        seller: string,
+        nftId: string
     ) {
         this.bids = [new Bid(signature, seller, initPrice)]
         this.initPrice = initPrice
