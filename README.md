@@ -75,10 +75,10 @@ _Application_
 - [x] Write, Test off-chain post NFT.
 - [ ] Write, Test, Deploy Matcher contract on Ropsten.
 - [ ] Plug off-chain in on-chain App.
-- [ ] Deploy App with Docker-Compose
+- [ ] Deploy App with Docker-Compose.
 
 _next steps_
 
-- [ ] Enable multiple auctions
-- [ ] Deploy App with Kubernetes for more scalability
-- [ ] Change to Actors Models for more scalability
+- [ ] Enable multiple auctions.
+- [ ] Deploy App with Kubernetes for more scalability.
+- [ ] Change to Actors Models for more scalability.
