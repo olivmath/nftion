@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals"
-import { app } from "../src/app"
+import { app } from "../src/infrastructure/app"
 import request from "supertest"
 
 describe("Auction routes", () => {
@@ -32,9 +32,9 @@ describe("Auction routes", () => {
     })
     test("/{nftId} - 202 | should be return fail if `0xaa` NFT Auction is closed", async () => {
         const response = await request(app).get("/0xaa")
-        expect(response.status).toEqual(202)
+        expect(response.status).toEqual(404)
         expect(response.body).toEqual({
-            message: "0xaa NFT Auction is closed"
+            message: "0xaa is already closed or not found",
         })
     })
     test("/{nftId} - 404 | should be return fail if `0xaa` NFT Auction is not found", async () => {
