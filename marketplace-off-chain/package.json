@@ -2,7 +2,7 @@
     "name": "wallet-generator",
     "license": "MIT",
     "scripts": {
-        "start": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
+        "r": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts",
         "fmt": "prettier -w .",
         "fmtc": "prettier -c .",
         "t": "yarn jest"

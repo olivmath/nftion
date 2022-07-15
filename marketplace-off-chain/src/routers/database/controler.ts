@@ -15,14 +15,14 @@ export class Bid {
         this.bid = bid
     }
 
-    signatureValidate(
-        signature: string,
-        addr: string,
-        message: string
-    ): boolean {
-        if (ethers.utils.verifyMessage(message, signature) == addr) {
-            return true
-        } else {
+    signatureValidate(signature: string, addr: string, message: string) {
+        try {
+            if (ethers.utils.verifyMessage(message, signature) == addr) {
+                return true
+            } else {
+                throw new Error("Signature not valid")
+            }
+        } catch {
             throw new Error("Signature not valid")
         }
     }
@@ -50,7 +50,7 @@ export class Auction {
         const currentBid = this.bids[0]
 
         if (currentBid.bid >= newBid.bid) {
-            this.bids.push(newBid)
+            throw new Error(`Enought Bid, ${currentBid.bid}`)
         } else {
             this.bids.splice(0, 0, newBid)
         }

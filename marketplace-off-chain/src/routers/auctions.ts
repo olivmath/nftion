@@ -44,12 +44,25 @@ const auctionsStatus = router.get("/:nftId", (request, response) => {
 })
 
 const newBid = router.post("/bid/:nftId", (request, response) => {
-    const nftId = request.params.nftId
-    const receivedBid: Bid = new Bid(
+    const [signature, addr, bid] = [
         request.body.signature,
         request.body.addr,
         request.body.bid
-    )
+    ]
+    if (signature == undefined || addr == undefined || bid == undefined) {
+        return response.status(404).json({
+            message: "not found params: `signature`, `addr`, `bid`"
+        })
+    }
+    const nftId = request.params.nftId
+    let receivedBid: Bid
+    try {
+        receivedBid = new Bid(signature, addr, bid)
+    } catch (e) {
+        return response.status(404).json({
+            message: (e as Error).message
+        })
+    }
     if (nftStatus(nftId) == "open") {
         const nftAuction: Auction = allAuctions.open.filter(
             (auction) => auction.nftId == nftId
@@ -59,7 +72,13 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
                 message: `${receivedBid.bid} is less than that initial price: ${nftAuction.initPrice}`
             })
         } else {
-            nftAuction.addNewBid(receivedBid)
+            try {
+                nftAuction.addNewBid(receivedBid)
+            }catch (e) {
+                return response.status(404).json({
+                    message: (e as Error).message
+                })
+            }
             return response.status(201).json({
                 yourBid: nftAuction.bids.findIndex(
                     (bid) => bid.addr == receivedBid.addr

@@ -1,5 +1,7 @@
 import { app } from "./app"
 
-app.listen(3333, () => {
-    console.log(`🚀 run in http://localhost:${3333}`)
+const port = 3000
+app.listen(port, () => {
+    const port = 3000
+    console.log(`🚀 run in http://localhost:${port}`)
 })
