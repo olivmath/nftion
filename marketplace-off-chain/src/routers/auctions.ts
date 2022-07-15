@@ -74,7 +74,7 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
         } else {
             try {
                 nftAuction.addNewBid(receivedBid)
-            }catch (e) {
+            } catch (e) {
                 return response.status(404).json({
                     message: (e as Error).message
                 })
