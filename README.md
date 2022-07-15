@@ -53,9 +53,9 @@ The off-chain system must be written in Node.js and it should not use any persis
 - 🕑 https://www.youtube.com/watch?v=nOfFeRZg9oE
 - 🕑 https://www.youtube.com/watch?v=7Q5E6RvLlUw
 - ✅ https://pt.wikipedia.org/wiki/Leilão
-- ✅  https://www.chainshot.com/courses
-- ✅  https://www.pointer.gg/tutorials
-- ✅  https://buildspace.so/projects
+- ✅ https://www.chainshot.com/courses
+- ✅ https://www.pointer.gg/tutorials
+- ✅ https://buildspace.so/projects
 - 💩 https://learn.questbook.xyz
 
 ## Design Solution
@@ -67,13 +67,15 @@ The off-chain system must be written in Node.js and it should not use any persis
 ## Iterate
 
 - [x] Write, Test, Deploy ERC20 contract.
-- [x] Write off-chain post bids.
+- [x] Write, Test off-chain post bids.
 - [ ] Write, Test, Deploy ERC721 contract
-- [ ] Write off-chain post NFT.
+- [x] Write, Test off-chain post NFT.
 - [ ] Write, Test, Deploy Matcher contract
 - [ ] Plug off-chain in on-chain App.
-- [ ] Enable single auction
 - [ ] Deploy App with Docker-Compose
+
+_next steps_
+
 - [ ] Enable multiple auctions
 - [ ] Deploy App with Kubernetes for more scalability
 - [ ] Change to Actors Models for more scalability
