@@ -1,7 +1,6 @@
-import { Bid } from "../models/bid.model"
 import { addNewBidByBidder, removeBidByBidder } from "../models/bidder.model"
-import { findAuction } from "./auction.check"
 import { validateSignature, validationData } from "./utils"
+import { findAuction } from "./auction.check"
 
 const validateBid = (
     signature: string,

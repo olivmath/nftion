@@ -1,5 +1,5 @@
-import { allAuctions } from "../database/db"
 import { auctionById } from "../validation/auction.check"
+import { allAuctions } from "../database/db"
 import { Auction } from "./auction.model"
 
 export const openNFTAuctionBySeller = (

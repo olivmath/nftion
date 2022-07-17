@@ -1,7 +1,5 @@
 import { validateSignature, validationData } from "./utils"
 import { allAuctions } from "../database/db"
-import { Auction } from "../models/auction.model"
-import { auctionById } from "./auction.check"
 import {
     closeNFTAuctionBySeller,
     openNFTAuctionBySeller

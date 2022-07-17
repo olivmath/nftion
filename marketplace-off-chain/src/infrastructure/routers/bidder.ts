@@ -1,5 +1,5 @@
-import { Router } from "express"
 import { addNewBid, removeBidFromAuction } from "../../validation/bidder.check"
+import { Router } from "express"
 
 const router = Router()
 
