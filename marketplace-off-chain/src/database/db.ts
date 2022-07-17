@@ -1,4 +1,4 @@
-import { Auction } from "../models/auction"
+import { Auction } from "../models/auction.model"
 
 // Mock NFT seller
 const seller = {
