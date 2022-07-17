@@ -16,6 +16,7 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
                 )
             )
     } catch (e) {
+        console.error((e as Error).message)
         return response.status(404).json({
             message: (e as Error).message
         })

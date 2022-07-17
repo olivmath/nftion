@@ -15,6 +15,7 @@ const auctionsStatus = router.get("/:nftId", (request, response) => {
     try {
         return response.status(200).json(findAuction(request.params.nftId))
     } catch (e) {
+        console.error((e as Error).message)
         return response.status(404).json({
             message: (e as Error).message
         })

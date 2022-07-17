@@ -16,6 +16,7 @@ const newAuction = router.post("/auction", (request, response) => {
                 )
             )
     } catch (e) {
+        console.error((e as Error).message)
         return response.status(404).json({
             message: (e as Error).message
         })
@@ -37,6 +38,7 @@ const closedAuction = router.delete(
                     )
                 )
         } catch (e) {
+            console.error((e as Error).message)
             return response.status(404).json({
                 message: (e as Error).message
             })
