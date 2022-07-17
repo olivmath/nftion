@@ -1,5 +1,5 @@
+import { newBid, removeBid } from "./routers/bidder"
 import { newAuction } from "./routers/seller"
-import { newBid } from "./routers/bidder"
 import express from "express"
 import {
     closedAuctions,
@@ -14,6 +14,7 @@ app.use(auctionsStatus)
 app.use(closedAuctions)
 app.use(openAuctions)
 app.use(newAuction)
+app.use(removeBid)
 app.use(newBid)
 
 export { app }
