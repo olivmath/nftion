@@ -2,6 +2,10 @@ import { validateSignature, validationData } from "./utils"
 import { allAuctions } from "../database/db"
 import { Auction } from "../models/auction.model"
 import { auctionById } from "./auction.check"
+import {
+    closeNFTAuctionBySeller,
+    openNFTAuctionBySeller
+} from "../models/seller.model"
 
 const validateNFT = (nft: string) => {
     if (allAuctions.open.find((auction) => auction.nftId == nft) != undefined) {
@@ -26,9 +30,7 @@ export const openAuction = (
     validateSignature(signature, seller, initPrice.toString())
     validateNFT(nftId)
 
-    const newAuction = new Auction(signature, initPrice, seller, nftId)
-    allAuctions.open.push(newAuction)
-    return newAuction
+    return openNFTAuctionBySeller(signature, initPrice, seller, nftId)
 }
 
 export const closeAuction = (
@@ -42,29 +44,6 @@ export const closeAuction = (
         [signature, initPrice, seller, nftId]
     )
     validateSignature(signature, seller, initPrice.toString())
-    const auction = auctionById(nftId)
-    if (auction.status == "noFound") {
-        throw new Error(`${nftId} not found`)
-    } else if (auction.status == "closed") {
-        throw new Error(`${nftId} closed`)
-    } else {
-        const auction = allAuctions.open.filter(
-            (auction) => auction.nftId == nftId
-        )[0]
-        allAuctions.closed.push(auction)
-        const index = allAuctions.open.findIndex(
-            (auction) => auction.nftId == nftId
-        )
-        allAuctions.open.splice(index, 1)
 
-        const maxBid = Math.max(...auction.bids.map((bid) => bid.bid))
-        const bidder = auction.bids.filter((bid) => bid.bid == maxBid)[0].addr
-        return {
-            seller: auction.seller,
-            nftId: auction.nftId,
-            initPrice: auction.initPrice,
-            endPrice: maxBid,
-            bidder: bidder
-        }
-    }
+    return closeNFTAuctionBySeller(nftId)
 }

@@ -5,7 +5,8 @@
         "r": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/index.ts",
         "fmt": "prettier -w .",
         "fmtc": "prettier -c .",
-        "t": "yarn jest"
+        "t": "yarn jest",
+        "ci": "yarn fmt && yarn t"
     },
     "dependencies": {
         "ethers": "^5.6.9",

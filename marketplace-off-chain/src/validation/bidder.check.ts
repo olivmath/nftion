@@ -1,4 +1,5 @@
 import { Bid } from "../models/bid.model"
+import { addNewBidByBidder, removeBidByBidder } from "../models/bidder.model"
 import { findAuction } from "./auction.check"
 import { validateSignature, validationData } from "./utils"
 
@@ -35,15 +36,7 @@ export const addNewBid = (
     ])
     validateSignature(signature, bidder, bid.toString())
 
-    const nftAuction = findAuction(nftId)
-    const receivedBid = new Bid(signature, bidder, bid)
-
-    nftAuction.addNewBid(receivedBid)
-    return {
-        yourBidIndex: nftAuction.bids.findIndex(
-            (bid) => bid.addr == receivedBid.addr
-        )
-    }
+    return addNewBidByBidder(signature, bidder, bid, nftId)
 }
 
 export const removeBidFromAuction = (
@@ -61,18 +54,5 @@ export const removeBidFromAuction = (
     validateSignature(signature, bidder, bid.toString())
     validateBid(signature, bidder, bid, nftId)
 
-    const nftAuction = findAuction(nftId)
-
-    const index = nftAuction.bids.findIndex(
-        (currentBid) => currentBid.addr == bidder && currentBid.bid == bid
-    )
-    const removedBid = nftAuction.bids[index]
-    nftAuction.bids.splice(index, 1)
-    return {
-        seller: nftAuction.seller,
-        nftId: nftAuction.nftId,
-        yourBid: removedBid.bid,
-        bidder: removedBid.addr,
-        signature: removedBid.signature
-    }
+    return removeBidByBidder(signature, bidder, bid, nftId)
 }
