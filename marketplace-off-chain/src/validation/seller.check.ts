@@ -1,23 +1,15 @@
-import { validateSignature } from "./utils"
+import { validateSignature, validationData } from "./utils"
 import { allAuctions } from "../database/db"
-import { Auction } from "../models/auction"
-import { auctionById, findAuction } from "./auction.check"
+import { Auction } from "../models/auction.model"
+import { auctionById } from "./auction.check"
 
-const validationData = (
-    signature: string,
-    initPrice: number,
-    seller: string,
-    nftId: string
-) => {
-    if (
-        signature == undefined ||
-        initPrice == undefined ||
-        seller == undefined ||
-        nftId == undefined
+const validateNFT = (nft: string) => {
+    if (allAuctions.open.find((auction) => auction.nftId == nft) != undefined) {
+        throw new Error(`nft: ${nft} is already opened`)
+    } else if (
+        allAuctions.closed.find((auction) => auction.nftId == nft) != undefined
     ) {
-        throw new Error(
-            "not found params: `signature`, `initPrice`, `seller`, `nftId`"
-        )
+        throw new Error(`nft: ${nft} is already created and closed`)
     }
 }
 
@@ -27,8 +19,13 @@ export const openAuction = (
     seller: string,
     nftId: string
 ) => {
-    validationData(signature, initPrice, seller, nftId)
-    validateSignature(signature, initPrice.toString(), seller)
+    validationData(
+        "not found params: `signature`, `initPrice`, `seller`, `nftId`",
+        [signature, initPrice, seller, nftId]
+    )
+    validateSignature(signature, seller, initPrice.toString())
+    validateNFT(nftId)
+
     const newAuction = new Auction(signature, initPrice, seller, nftId)
     allAuctions.open.push(newAuction)
     return newAuction
@@ -40,11 +37,16 @@ export const closeAuction = (
     seller: string,
     nftId: string
 ) => {
-    validationData(signature, initPrice, seller, nftId)
-    validateSignature(signature, initPrice.toString(), seller)
+    validationData(
+        "not found params: `signature`, `initPrice`, `seller`, `nftId`",
+        [signature, initPrice, seller, nftId]
+    )
+    validateSignature(signature, seller, initPrice.toString())
     const auction = auctionById(nftId)
-    if (auction.status != "open") {
-        throw new Error(`${nftId} is already closed or not found`)
+    if (auction.status == "noFound") {
+        throw new Error(`${nftId} not found`)
+    } else if (auction.status == "closed") {
+        throw new Error(`${nftId} closed`)
     } else {
         const auction = allAuctions.open.filter(
             (auction) => auction.nftId == nftId
