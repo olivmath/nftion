@@ -1,4 +1,4 @@
-import { Bid } from "./bid"
+import { Bid } from "./bid.model"
 
 export class Auction {
     initPrice: number
@@ -22,7 +22,9 @@ export class Auction {
         const currentBid = this.bids[0]
 
         if (currentBid.bid >= newBid.bid) {
-            throw new Error(`Enought Bid, ${currentBid.bid}`)
+            throw new Error(
+                `${newBid.bid} is insufficient, bid more than ${currentBid.bid}`
+            )
         } else {
             this.bids.splice(0, 0, newBid)
         }
