@@ -3,7 +3,7 @@ import { Router } from "express"
 
 const router = Router()
 
-const newAuction = router.post("/auction", (request, response) => {
+const newAuction = router.post("/auction", async (request, response) => {
     try {
         return response
             .status(201)
