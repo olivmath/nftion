@@ -1,37 +1,37 @@
-import { expect } from "chai"
-import { ethers } from "hardhat"
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers"
 import { Lua__factory, Lua } from "../typechain-types"
+import { ethers as hardhat } from "hardhat"
+import { expect } from "chai"
 
-describe("Token contract", function () {
+describe("Lua Token", () => {
     let luaToken: Lua
     let owner: SignerWithAddress
     let addr1: SignerWithAddress
     let addr2: SignerWithAddress
     let addrs: SignerWithAddress[]
 
-    beforeEach(async function () {
-        ;[owner, addr1, addr2, ...addrs] = await ethers.getSigners()
+    beforeEach(async () => {
+        ;[owner, addr1, addr2, ...addrs] = await hardhat.getSigners()
 
-        const luaTokenFactory = (await ethers.getContractFactory(
+        const luaTokenFactory = (await hardhat.getContractFactory(
             "Lua",
             owner
         )) as Lua__factory
         const totalSupply = (10 ** 9).toString()
         luaToken = await luaTokenFactory.deploy(
-            ethers.utils.parseEther(totalSupply)
+            hardhat.utils.parseEther(totalSupply)
         )
     })
 
-    describe("Deployment", function () {
-        it("Should assign the total supply of tokens to the owner", async function () {
+    describe("Deployment", () => {
+        it("Should assign the total supply of tokens to the owner", async () => {
             const ownerBalance = await luaToken.balanceOf(owner.address)
             expect(await luaToken.totalSupply()).to.equal(ownerBalance)
         })
     })
 
-    describe("Transactions", function () {
-        it("`owner` should send 100LUA to `addr1`", async function () {
+    describe("Transfer", () => {
+        it("`owner` should send 100LUA to `addr1`", async () => {
             // `owner` send 100LUA to `addr1`
             await luaToken.connect(owner).transfer(addr1.address, 100)
             const addr1Balance = await luaToken.balanceOf(addr1.address)
@@ -42,7 +42,7 @@ describe("Token contract", function () {
             expect(addr2Balance).to.equal(10)
         })
 
-        it("`owner` must not send 100LUA to `addr1` because there is no balance", async function () {
+        it("`owner` must not send 100LUA to `addr1` because there is no balance", async () => {
             const initialOwnerBalance = await luaToken.balanceOf(owner.address)
             const addr1Balance = await luaToken.balanceOf(addr1.address)
 
@@ -61,7 +61,7 @@ describe("Token contract", function () {
             )
         })
 
-        it("`owner` should not have the same balance as in the beginning", async function () {
+        it("`owner` should not have the same balance as in the beginning", async () => {
             const initialOwnerBalance = await luaToken.balanceOf(owner.address)
 
             // Transfer 100 tokens from owner to addr1.
@@ -82,12 +82,12 @@ describe("Token contract", function () {
         })
     })
 
-    describe("Approve", function () {
-        beforeEach(async function () {
+    describe("Approve", () => {
+        beforeEach(async () => {
             await luaToken.connect(owner).transfer(addr1.address, 1000)
             await luaToken.connect(addr1).approve(owner.address, 200)
         })
-        it("`addr1` should allow `owner` spend 200LUA", async function () {
+        it("`addr1` should allow `owner` spend 200LUA", async () => {
             await luaToken
                 .connect(owner)
                 .transferFrom(addr1.address, addr2.address, 200)
@@ -95,7 +95,7 @@ describe("Token contract", function () {
             const balance = await luaToken.balanceOf(addr1.address)
             expect(balance).to.be.equal(800)
         })
-        it("`addr1` must not allow `owner` spend more than 200LUA", async function () {
+        it("`addr1` must not allow `owner` spend more than 200LUA", async () => {
             await expect(
                 luaToken
                     .connect(owner)
@@ -109,18 +109,18 @@ describe("Token contract", function () {
             ).to.be.revertedWith("ERC20: insufficient allowance")
         })
     })
-    describe("Allowency", function () {
-        beforeEach(async function () {
+    describe("Allowency", () => {
+        beforeEach(async () => {
             await luaToken.connect(owner).transfer(addr1.address, 1000)
             await luaToken.connect(addr1).approve(owner.address, 200)
         })
-        it("`owner` can spend 200LUA of `addr1`", async function () {
+        it("`owner` can spend 200LUA of `addr1`", async () => {
             const initAllowBalance = await luaToken
                 .connect(addr1)
                 .allowance(addr1.address, owner.address)
             expect(initAllowBalance).to.be.equal(200)
         })
-        it("`owner` can not spend any LUA of `addr1`", async function () {
+        it("`owner` can not spend any LUA of `addr1`", async () => {
             await luaToken.connect(addr1).approve(owner.address, 0)
 
             await expect(
