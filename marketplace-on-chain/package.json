@@ -2,18 +2,19 @@
     "name": "hardhat-project",
     "license": "MIT",
     "scripts": {
-        "r": "npx hardhat node",
-        "c": "npx hardhat compile",
-        "t": "npx hardhat test",
-        "d": "npx hardhat run scripts/deploy.ts",
-        "transfer": "npx hardhat run scripts/transfer.ts",
-        "console": "npx hardhat console",
         "deploy-local": "npx hardhat run scripts/deploy.ts --network localhost",
         "deploy-rinkeby": "npx hardhat run scripts/deploy.ts --network rinkeby",
+        "transfer": "npx hardhat run scripts/transfer.ts",
+        "d": "npx hardhat run scripts/deploy.ts",
         "accounts": "npx hardhat accounts",
+        "console": "npx hardhat console",
+        "t-c": "npx hardhat coverage",
         "h-help": "npx hardhat help",
-        "fmt": "prettier -w .",
-        "fmtc": "prettier -c ."
+        "c": "npx hardhat compile",
+        "r": "npx hardhat node",
+        "t": "npx hardhat test",
+        "fmtc": "prettier -c .",
+        "fmt": "prettier -w ."
     },
     "devDependencies": {
         "@ethersproject/abi": "^5.6.4",

@@ -3,7 +3,7 @@ import { Router } from "express"
 
 const router = Router()
 
-const newBid = router.post("/bid/:nftId", (request, response) => {
+const newBid = router.post("/bid/:nftId", async (request, response) => {
     try {
         return response
             .status(201)
@@ -23,7 +23,7 @@ const newBid = router.post("/bid/:nftId", (request, response) => {
     }
 })
 
-const removeBid = router.delete("/bid/:nftId", (request, response) => {
+const removeBid = router.delete("/bid/:nftId", async (request, response) => {
     try {
         return response
             .status(201)
