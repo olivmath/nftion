@@ -37,22 +37,18 @@ describe("Duck NFT", function () {
             )
             expect(balance).to.equal(1)
         })
-        // it("Should be fail if receiver already have 1 NFT", async () => {
-        //     await DuckNFT.connect(owner).mintTo(addr1.address)
-        //     expect(
-        //         await DuckNFT.connect(owner).mintTo(addr1.address)
-        //     ).to.be.revertedWithoutReason()
-        // })
         it("Should be fail if more than 5 mint", async () => {
-            const mint = async (addr: SignerWithAddress) => {
-                return await DuckNFT.connect(owner).mintTo(addr.address)
+            const mint = async (addr: SignerWithAddress, nftId: number) => {
+                await expect(await DuckNFT.connect(owner).mintTo(addr.address))
+                    .to.emit(DuckNFT, "Minted")
+                    .withArgs(addr.address, nftId)
             }
-            await mint(addrs[0])
-            await mint(addrs[1])
-            await mint(addrs[2])
-            await mint(addrs[3])
-            await mint(addrs[4])
-            expect(await mint(owner)).to.be.revertedWith("Total supply fully")
+            await mint(addrs[0], 0)
+            await mint(addrs[1], 1)
+            await mint(addrs[2], 2)
+            await mint(addrs[3], 3)
+            await mint(addrs[4], 4)
+            expect(await mint(owner, 5)).to.be.revertedWith("Total supply fully")
         })
     })
     describe("Transfer", () => {
@@ -87,6 +83,14 @@ describe("Duck NFT", function () {
             )
             expect(
                 await DuckNFT.connect(owner).balanceOf(addrs[2].address)
+            ).to.equal(1)
+        })
+    })
+    describe("Allowency", () => {
+        it("test A", async () => {
+            await DuckNFT.connect(owner).mintTo(addr1.address)
+            expect(
+                await DuckNFT.connect(owner).balanceOf(addr1.address)
             ).to.equal(1)
         })
     })
