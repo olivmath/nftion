@@ -2,6 +2,8 @@
 pragma solidity ^0.8.15;
 
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Matcher {
     using SignatureChecker for address;
@@ -37,15 +39,10 @@ contract Matcher {
         // keccak256(NFTid) == seller.message
 
         // SWAP
-        // bidder.ERC20Contract.call{gas: 50000}(
-        //     abi.encodeWithSignature(
-        //         transferFrom(bidder.addr, seller.addr, bidder.bid)
-        //     )
-        // );
-        // seller.ERC721Contract.call{gas: 50000}(
-        //     abi.encodeWithSignature(
-        //         transferFrom(seller.addr, bidder.addr, seller.NFTid)
-        //     )
-        // );
+        // IERC721 sellerNFT = IERC721(seller.ERC721Contract);
+        // sellerNFT.transferFrom(bidder.addr, seller.addr, bidder.bid);
+
+        // IERC20 bidderToken = IERC20(bidder.ERC20Contract);
+        // bidderToken.transferFrom(seller.addr, bidder.addr, seller.NFTid);
     }
 }
