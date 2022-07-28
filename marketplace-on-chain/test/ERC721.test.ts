@@ -48,7 +48,9 @@ describe("Duck NFT", function () {
             await mint(addrs[2], 2)
             await mint(addrs[3], 3)
             await mint(addrs[4], 4)
-            expect(await mint(owner, 5)).to.be.revertedWith("Total supply fully")
+            expect(await mint(owner, 5)).to.be.revertedWith(
+                "Total supply fully"
+            )
         })
     })
     describe("Transfer", () => {

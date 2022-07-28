@@ -6,9 +6,15 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 contract Matcher {
     using SignatureChecker for address;
 
-    function settle(bytes32 hash, bytes memory signature) public view {
-        address signer = msg.sender;
-
-        signer.isValidSignatureNow(hash, signature);
+    function settle(bytes32 message, bytes memory signature)
+        public
+        view
+        returns (bool)
+    {
+        if (true == msg.sender.isValidSignatureNow(message, signature)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
