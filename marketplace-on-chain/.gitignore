@@ -1,11 +1,11 @@
-node_modules
-.env
-coverage
 coverage.json
+node_modules
 typechain
+coverage
+.env
 
 #Hardhat files
-cache
-artifacts
-Hardhat.config.js
+hardhat.config.ts
 typechain-types/
+artifacts
+cache

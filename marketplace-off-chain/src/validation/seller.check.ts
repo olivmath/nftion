@@ -5,7 +5,14 @@ import {
     openNFTAuctionBySeller
 } from "../models/seller.model"
 
-const validateNFT = (nft: string) => {
+const validateApprove = (seller: string, nftId: string) => {
+    // validate approve
+    // get contract using <ABI | ContractAddress | Provider>
+    // call function `approve` of contract
+    // validate response of contract
+}
+
+const validateNFTAuction = (nft: string) => {
     if (allAuctions.open.find((auction) => auction.nftId == nft) != undefined) {
         throw new Error(`nft: ${nft} is already opened`)
     } else if (
@@ -22,11 +29,12 @@ export const openAuction = (
     nftId: string
 ) => {
     validationData(
-        "not found params: `signature`, `initPrice`, `seller`, `nftId`",
+        "not found params: `signature`, `initPrice`, `seller`, `nftAddress`, `nftId`",
         [signature, initPrice, seller, nftId]
     )
     validateSignature(signature, seller, initPrice.toString())
-    validateNFT(nftId)
+    validateNFTAuction(nftId)
+    validateApprove(seller, nftId)
 
     return openNFTAuctionBySeller(signature, initPrice, seller, nftId)
 }

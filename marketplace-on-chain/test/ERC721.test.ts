@@ -90,4 +90,12 @@ describe("Duck NFT", function () {
             ).to.equal(1)
         })
     })
+    describe("Allowency", () => {
+        it("test A", async () => {
+            await DuckNFT.connect(owner).mintTo(addr1.address)
+            expect(
+                await DuckNFT.connect(owner).balanceOf(addr1.address)
+            ).to.equal(1)
+        })
+    })
 })
