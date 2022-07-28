@@ -1,4 +1,5 @@
 import { Auction } from "../models/auction.model"
+import { ethers } from "ethers"
 
 // Mock NFT seller
 const seller = {
@@ -24,3 +25,6 @@ export const allAuctions = {
     open: [duckAuction],
     closed: [monkeyAuction]
 }
+
+
+export const ownerMarketplace = new ethers.Wallet("prvk")
