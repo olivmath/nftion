@@ -12,7 +12,6 @@ const validateApprove = (seller: string, nftId: string) => {
     // validate response of contract
 }
 
-
 const validateNFTAuction = (nft: string) => {
     if (allAuctions.open.find((auction) => auction.nftId == nft) != undefined) {
         throw new Error(`nft: ${nft} is already opened`)

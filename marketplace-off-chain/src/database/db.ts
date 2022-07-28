@@ -26,5 +26,4 @@ export const allAuctions = {
     closed: [monkeyAuction]
 }
 
-
 export const ownerMarketplace = new ethers.Wallet("prvk")
