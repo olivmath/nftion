@@ -17,7 +17,7 @@ contract Duck is ERC721, Ownable {
 
     constructor() ERC721("Duck", "QUAK") {}
 
-    function mintTo(address receiver) external {
+    function mintTo(address receiver) external onlyOwner {
         uint256 currentTokenId = _tokenIds.current();
 
         require(currentTokenId <= totalSupply, "Total supply fully");
