@@ -3,14 +3,14 @@ import { Duck__factory, Duck } from "../typechain-types"
 import { ethers as hardhat } from "hardhat"
 import { expect } from "chai"
 
-describe("Duck NFT", function () {
+describe("Duck NFT", () => {
     let DuckNFT: Duck
     let owner: SignerWithAddress
     let addr1: SignerWithAddress
     let addr2: SignerWithAddress
     let addrs: Array<SignerWithAddress>
 
-    beforeEach(async function () {
+    beforeEach(async () => {
         ;[owner, addr1, addr2, ...addrs] = await hardhat.getSigners()
 
         const DuckNFTFactory = (await hardhat.getContractFactory(
