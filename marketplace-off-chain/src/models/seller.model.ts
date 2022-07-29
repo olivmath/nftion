@@ -31,6 +31,12 @@ export const closeNFTAuctionBySeller = (nftId: string) => {
 
         const maxBid = Math.max(...auction.bids.map((bid) => bid.bid))
         const bidder = auction.bids.filter((bid) => bid.bid == maxBid)[0].addr
+
+        // check:
+        //  - balance
+        //  - allowance
+        // call smart-contract for swap
+
         return {
             seller: auction.seller,
             nftId: auction.nftId,
