@@ -4,14 +4,17 @@ pragma solidity ^0.8.15;
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "hardhat/console.sol";
 
-contract Matcher {
+contract Matcher is Ownable {
     using SignatureChecker for address;
 
     struct Seller {
         address ERC721Contract;
         bytes32 message;
         bytes signature;
+        address addr;
         uint256 NFTid;
     }
 
@@ -19,30 +22,36 @@ contract Matcher {
         address ERC20Contract;
         bytes32 message;
         bytes signature;
+        address addr;
         uint256 bid;
     }
 
-    function settle(bytes32 message, bytes memory signature)
+    function swap(Seller memory seller, Bidder memory bidder)
         public
-        view
+        onlyOwner
         returns (bool)
     {
-        if (true == msg.sender.isValidSignatureNow(message, signature)) {
-            return true;
-        } else {
-            return false;
-        }
-
-        // validate seller signature
-        // validate bidder signature
-        // keccak256(bid) == bidder.message
-        // keccak256(NFTid) == seller.message
+        require(
+            true ==
+                seller.addr.isValidSignatureNow(
+                    seller.message,
+                    seller.signature
+                ) &&
+                true ==
+                bidder.addr.isValidSignatureNow(
+                    bidder.message,
+                    bidder.signature
+                )
+        );
 
         // SWAP
-        // IERC721 sellerNFT = IERC721(seller.ERC721Contract);
-        // sellerNFT.transferFrom(bidder.addr, seller.addr, bidder.bid);
 
-        // IERC20 bidderToken = IERC20(bidder.ERC20Contract);
-        // bidderToken.transferFrom(seller.addr, bidder.addr, seller.NFTid);
+        IERC20 bidderToken = IERC20(bidder.ERC20Contract);
+        bidderToken.transferFrom(bidder.addr, seller.addr, bidder.bid);
+
+        IERC721 sellerNFT = IERC721(seller.ERC721Contract);
+        sellerNFT.safeTransferFrom(seller.addr, bidder.addr, seller.NFTid);
+
+        return true;
     }
 }
