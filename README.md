@@ -74,15 +74,12 @@ _Application_
 ## Iterate
 
 - [x] Write, Test, Deploy ERC20 contract on Local.
-- [x] Write, Test off-chain post bids.
 - [x] Write, Test, Deploy ERC721 contract on Local.
+- [x] Write, Test, Deploy Matcher contract on Local.
+- [x] Write, Test off-chain post bids.
 - [x] Write, Test off-chain post NFT.
-- [ ] Write, Test, Deploy Matcher contract on Local.
 - [ ] Plug off-chain in on-chain App.
 - [ ] Deploy App with Docker-Compose.
-
-_next steps_
-
-- [ ] Enable multiple auctions.
+- [ ] Close Auction by timer.
 - [ ] Deploy App with Kubernetes for more scalability.
 - [ ] Change to Actors Models for more scalability.
