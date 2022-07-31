@@ -79,20 +79,22 @@ describe("Matcher", () => {
          * - Seller ->   NFT   -> Bidder
          * - Seller <-  ERC20  <- Bidder
          */
+        const NFTid = 0
         const sellerStruct = {
             ERC721Contract: Duck.address,
-            message: ethers.utils.hashMessage("0"),
-            signature: await seller.signMessage("0"),
+            message: ethers.utils.hashMessage(NFTid.toString()),
+            signature: await seller.signMessage(NFTid.toString()),
             addr: seller.address,
-            NFTid: 0
+            NFTid: NFTid
         }
 
+        const bid = 30
         const bidderStruct = {
             ERC20Contract: Lua.address,
-            message: ethers.utils.hashMessage("30"),
-            signature: await bidder.signMessage("30"),
+            message: ethers.utils.hashMessage(bid.toString()),
+            signature: await bidder.signMessage(bid.toString()),
             addr: bidder.address,
-            bid: 30
+            bid: bid
         }
 
         await Matcher.swap(sellerStruct, bidderStruct, {

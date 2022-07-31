@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/utils/Strings.sol";
 import "hardhat/console.sol";
 
 contract Matcher is Ownable {
@@ -31,18 +32,15 @@ contract Matcher is Ownable {
         onlyOwner
         returns (bool)
     {
-        require(
-            true ==
-                seller.addr.isValidSignatureNow(
-                    seller.message,
-                    seller.signature
-                ) &&
-                true ==
-                bidder.addr.isValidSignatureNow(
-                    bidder.message,
-                    bidder.signature
-                )
-        );
+        /**
+         * @todo
+         *
+         * validateMessage(seller.message, seller.NFTid);
+         * validateMessage(bidder.message, bidder.bid);
+         */
+
+        validateSignature(seller.addr, seller.message, seller.signature);
+        validateSignature(bidder.addr, bidder.message, bidder.signature);
 
         // SWAP
 
@@ -53,5 +51,32 @@ contract Matcher is Ownable {
         sellerNFT.safeTransferFrom(seller.addr, bidder.addr, seller.NFTid);
 
         return true;
+    }
+
+    /**
+     * todo
+     * - validate if de hashed message sent is equals to bid | ntf id
+     *
+     * function validateMessage(bytes32 message, uint256 rawData) private view {
+     * string memory prefix = "\x19Ethereum Signed Message:\n";
+     * uint256 length = bytes(Strings.toString(rawData)).length;
+     * bytes32 hashMsg = keccak256(abi.encodePacked(prefix, length, rawData));
+     * console.logBytes32(hashMsg);
+     * console.logBytes32(message);
+     *
+     * require(message == hashMsg, "Hash dont match with you data");
+     *}
+     */
+
+    function validateSignature(
+        address addr,
+        bytes32 message,
+        bytes memory signature
+    ) private view {
+        string memory erro = string.concat(
+            "Invalid signature for ",
+            Strings.toHexString(addr)
+        );
+        require(true == addr.isValidSignatureNow(message, signature), erro);
     }
 }
