@@ -53,6 +53,18 @@ contract Matcher is Ownable {
         return true;
     }
 
+    function validateSignature(
+        address addr,
+        bytes32 message,
+        bytes memory signature
+    ) private view {
+        string memory erro = string.concat(
+            "Invalid signature for ",
+            Strings.toHexString(addr)
+        );
+        require(true == addr.isValidSignatureNow(message, signature), erro);
+    }
+
     /**
      * todo
      * - validate if de hashed message sent is equals to bid | ntf id
@@ -67,16 +79,4 @@ contract Matcher is Ownable {
      * require(message == hashMsg, "Hash dont match with you data");
      *}
      */
-
-    function validateSignature(
-        address addr,
-        bytes32 message,
-        bytes memory signature
-    ) private view {
-        string memory erro = string.concat(
-            "Invalid signature for ",
-            Strings.toHexString(addr)
-        );
-        require(true == addr.isValidSignatureNow(message, signature), erro);
-    }
 }
