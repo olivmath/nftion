@@ -29,20 +29,14 @@ describe("Duck NFT", () => {
     })
     describe("Mint", () => {
         it("Should return the nftId and ", async () => {
-            await expect(await DuckNFT.connect(owner).mintTo(addr1.address))
+            await expect(await DuckNFT.connect(owner).mintTo(owner.address))
                 .to.emit(DuckNFT, "Minted")
-                .withArgs("0x70997970C51812dc3A010C7d01b50e0d17dc79C8", 0)
+                .withArgs("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 0)
             const balance = await DuckNFT.connect(owner).balanceOf(
-                addr1.address
+                owner.address
             )
             expect(balance).to.equal(1)
         })
-        // it("Should be fail if receiver already have 1 NFT", async () => {
-        //     await DuckNFT.connect(owner).mintTo(addr1.address)
-        //     expect(
-        //         await DuckNFT.connect(owner).mintTo(addr1.address)
-        //     ).to.be.revertedWithoutReason()
-        // })
         it("Should be fail if more than 5 mint", async () => {
             const mint = async (addr: SignerWithAddress) => {
                 return await DuckNFT.connect(owner).mintTo(addr.address)
@@ -57,12 +51,12 @@ describe("Duck NFT", () => {
     })
     describe("Transfer", () => {
         it("Should transfer NFT from addr1 to addr2", async () => {
-            await DuckNFT.connect(owner).mintTo(addr1.address)
+            await DuckNFT.connect(owner).mintTo(owner.address)
             expect(
-                await DuckNFT.connect(owner).balanceOf(addr1.address)
+                await DuckNFT.connect(owner).balanceOf(owner.address)
             ).to.equal(1)
-            await DuckNFT.connect(addr1).transferFrom(
-                addr1.address,
+            await DuckNFT.connect(owner).transferFrom(
+                owner.address,
                 addr2.address,
                 0
             )
@@ -78,7 +72,7 @@ describe("Duck NFT", () => {
                 await DuckNFT.connect(owner).balanceOf(addr1.address)
             ).to.equal(1)
 
-            DuckNFT.connect(addr1).approve(addr2.address, 0)
+            await DuckNFT.connect(addr1).approve(addr2.address, 0)
 
             await DuckNFT.connect(addr2).transferFrom(
                 addr1.address,
