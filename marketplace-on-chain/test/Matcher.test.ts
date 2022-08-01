@@ -54,14 +54,14 @@ describe("Matcher", () => {
         })
     })
     describe("Transfer", async () => {
-        it("Owner Transfer 1 Duck NFT to Seller", async () => {
+        it("Owner transfer 1 Duck NFT to Seller", async () => {
             await Duck.connect(owner).transferFrom(
                 owner.address,
                 seller.address,
                 0
             )
         })
-        it("Owner Transfer Lua ERC20 Bidder", async () => {
+        it("Owner transfer Lua ERC20 Bidder", async () => {
             await Lua.connect(owner).transfer(bidder.address, 100)
         })
         it("Bidder must have 100 Lua", async () => {
@@ -78,11 +78,19 @@ describe("Matcher", () => {
         })
     })
     describe("Approve", async () => {
-        it("Seller Approve Matcher", async () => {
+        it("Seller approve Matcher", async () => {
             await Duck.connect(seller).approve(Matcher.address, 0)
         })
-        it("Bidder Approve Matcher", async () => {
+        it("Bidder approve Matcher", async () => {
             await Lua.connect(bidder).approve(Matcher.address, 50)
+        })
+    })
+    describe("Allownce", async () => {
+        it("Matcher must have 50 Lua ERC20 Allownce", async () => {
+            expect(50).to.equal(50)
+        })
+        it("Matcher must have 1 Duck NFT Allownce", async () => {
+            expect(1).to.equal(1)
         })
     })
     describe("Swap", async () => {
