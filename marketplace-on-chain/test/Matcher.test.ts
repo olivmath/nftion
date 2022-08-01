@@ -17,7 +17,7 @@ describe("Matcher", () => {
     let addrs: SignerWithAddress[]
 
     /**
-     * @DeclareContracts
+     * @DeclareSmartContracts
      * - ERC20
      * - ERC721
      * - Matcher
@@ -26,93 +26,109 @@ describe("Matcher", () => {
     let Duck: Duck
     let Matcher: Matcher
 
-    beforeEach(async () => {
-        /**
-         * @CreateWallets
-         * - Owner
-         * - Others
-         */
-        ;[owner, seller, bidder, ...addrs] = await ethers.getSigners()
-        console.log("🔑 Created Wallets")
-
-        /**
-         * @Deploy
-         * - ERC20
-         * - ERC721
-         * - Matcher
-         */
-        const DuckFactory = await hardhat.ethers.getContractFactory("Duck")
-        const luaFactory = await hardhat.ethers.getContractFactory("Lua")
-        const MatcherFactory = await hardhat.ethers.getContractFactory(
-            "Matcher"
-        )
-
-        Matcher = await MatcherFactory.deploy()
-        Lua = await luaFactory.deploy(1000)
-        Duck = await DuckFactory.deploy()
-
-        console.log("🚀 Deployed SmartContract")
-
-        /**
-         * @Mint
-         * - NFT
-         * - Token
-         */
-        await Duck.connect(owner).mintTo(seller.address)
-        await Lua.connect(owner).transfer(bidder.address, 100)
-
-        console.log("✅ Minted Tokens")
-
-        /**
-         * @ApproveToMatcher
-         * - Seller
-         * - Bidder
-         */
-        await Duck.connect(seller).approve(Matcher.address, 0)
-        await Lua.connect(bidder).approve(Matcher.address, 50)
-
-        console.log("🤝 Matcher Approved")
-    })
-    it("Swap Auction", async () => {
-        /**
-         * @SwapOnMatcher
-         * - Seller ->   NFT   -> Bidder
-         * - Seller <-  ERC20  <- Bidder
-         */
-        const NFTid = 0
-        const sellerStruct = {
-            ERC721Contract: Duck.address,
-            message: ethers.utils.hashMessage(NFTid.toString()),
-            signature: await seller.signMessage(NFTid.toString()),
-            addr: seller.address,
-            NFTid: NFTid
-        }
-
-        const bid = 30
-        const bidderStruct = {
-            ERC20Contract: Lua.address,
-            message: ethers.utils.hashMessage(bid.toString()),
-            signature: await bidder.signMessage(bid.toString()),
-            addr: bidder.address,
-            bid: bid
-        }
-
-        await Matcher.swap(sellerStruct, bidderStruct, {
-            gasLimit: 500000
+    describe("Wallet", async () => {
+        it("Create Wallets", async () => {
+            ;[owner, seller, bidder, ...addrs] = await ethers.getSigners()
         })
+    })
 
-        /**
-         * @ValidateSwap
-         * - seller must have 30 Lua
-         * - bidder must have Duck NFT
-         */
+    describe("Deploy", async () => {
+        it("Deploy ERC20", async () => {
+            const luaFactory = await hardhat.ethers.getContractFactory("Lua")
+            Lua = await luaFactory.deploy(1000)
+        })
+        it("Deploy ERC721", async () => {
+            const DuckFactory = await hardhat.ethers.getContractFactory("Duck")
+            Duck = await DuckFactory.deploy()
+        })
+        it("Deploy Matcher", async () => {
+            const MatcherFactory = await hardhat.ethers.getContractFactory(
+                "Matcher"
+            )
+            Matcher = await MatcherFactory.deploy()
+        })
+    })
+    describe("Mint", async () => {
+        it("Mint Duck NFT", async () => {
+            await Duck.connect(owner).mintTo(owner.address)
+        })
+    })
+    describe("Transfer", async () => {
+        it("Owner Transfer 1 Duck NFT to Seller", async () => {
+            await Duck.connect(owner).transferFrom(
+                owner.address,
+                seller.address,
+                0
+            )
+        })
+        it("Owner Transfer Lua ERC20 Bidder", async () => {
+            await Lua.connect(owner).transfer(bidder.address, 100)
+        })
+        it("Bidder must have 100 Lua", async () => {
+            const bidderBalance = await Lua.connect(owner).balanceOf(
+                bidder.address
+            )
+            expect(bidderBalance).to.equal(100)
+        })
+        it("Seller must have 1 Duck NFT", async () => {
+            const sellerBalance = await Duck.connect(owner).balanceOf(
+                seller.address
+            )
+            expect(sellerBalance).to.equal(1)
+        })
+    })
+    describe("Approve", async () => {
+        it("Seller Approve Matcher", async () => {
+            await Duck.connect(seller).approve(Matcher.address, 0)
+        })
+        it("Bidder Approve Matcher", async () => {
+            await Lua.connect(bidder).approve(Matcher.address, 50)
+        })
+    })
+    describe("Swap", async () => {
+        it("Swap Auction", async () => {
+            /**
+             * @SwapOnMatcher
+             * - Seller ->   NFT   -> Bidder
+             * - Seller <-  ERC20  <- Bidder
+             */
+            const NFTid = 0
+            const sellerStruct = {
+                ERC721Contract: Duck.address,
+                message: ethers.utils.hashMessage(NFTid.toString()),
+                signature: await seller.signMessage(NFTid.toString()),
+                addr: seller.address,
+                NFTid: NFTid
+            }
 
-        const swapBidder = await Duck.connect(owner).balanceOf(bidder.address)
-        const swapSeller = await Lua.connect(owner).balanceOf(seller.address)
+            const bid = 30
+            const bidderStruct = {
+                ERC20Contract: Lua.address,
+                message: ethers.utils.hashMessage(bid.toString()),
+                signature: await bidder.signMessage(bid.toString()),
+                addr: bidder.address,
+                bid: bid
+            }
 
-        expect(swapBidder).to.equal(1)
-        expect(swapSeller).to.equal(30)
+            await Matcher.swap(sellerStruct, bidderStruct, {
+                gasLimit: 500000
+            })
+        })
+    })
 
-        console.log("🔁 Swaped NFT <-> ERC20")
+    describe("Validate Swap", async () => {
+        it("Seller must have 30 Lua", async () => {
+            const swapSeller = await Lua.connect(owner).balanceOf(
+                seller.address
+            )
+            expect(swapSeller).to.equal(30)
+        })
+        it("Bidder must have 1 Duck NFT", async () => {
+            const swapBidder = await Duck.connect(owner).balanceOf(
+                bidder.address
+            )
+
+            expect(swapBidder).to.equal(1)
+        })
     })
 })
