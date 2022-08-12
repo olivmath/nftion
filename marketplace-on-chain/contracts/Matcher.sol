@@ -15,16 +15,58 @@ contract Matcher is Ownable {
         address ERC721Contract;
         bytes32 message;
         bytes signature;
-        address addr;
         uint256 NFTid;
+        address addr;
+        uint256 bid;
     }
 
     struct Bidder {
         address ERC20Contract;
         bytes32 message;
         bytes signature;
+        uint256 NFTid;
         address addr;
         uint256 bid;
+    }
+
+    function validateSignature(
+        address addr,
+        bytes32 message,
+        bytes memory signature
+    ) private {
+        string memory erro = string.concat(
+            "Invalid signature for ",
+            Strings.toHexString(addr)
+        );
+        require(true == addr.isValidSignatureNow(message, signature), erro);
+    }
+
+    function validateMessage(Seller memory seller, Bidder memory bidder)
+        private
+        pure
+    {
+        require(
+            seller.NFTid == bidder.NFTid,
+            "Seller and Bidder disagree about NFTid"
+        );
+        require(
+            seller.bid == bidder.bid,
+            "Seller and Bidder disagree about bid"
+        );
+
+        require(
+            seller.message == bidder.message,
+            "Seller and Bidder disagree about message"
+        );
+    }
+
+    function validateAuction(Seller memory seller, Bidder memory bidder)
+        private
+    {
+        validateMessage(seller, bidder);
+
+        validateSignature(seller.addr, seller.message, seller.signature);
+        validateSignature(bidder.addr, bidder.message, bidder.signature);
     }
 
     function swap(Seller memory seller, Bidder memory bidder)
@@ -32,15 +74,7 @@ contract Matcher is Ownable {
         onlyOwner
         returns (bool)
     {
-        /**
-         * @todo
-         *
-         * validateMessage(seller.message, seller.NFTid);
-         * validateMessage(bidder.message, bidder.bid);
-         */
-
-        validateSignature(seller.addr, seller.message, seller.signature);
-        validateSignature(bidder.addr, bidder.message, bidder.signature);
+        validateAuction(seller, bidder);
 
         // SWAP
 
@@ -52,31 +86,4 @@ contract Matcher is Ownable {
 
         return true;
     }
-
-    function validateSignature(
-        address addr,
-        bytes32 message,
-        bytes memory signature
-    ) private view {
-        string memory erro = string.concat(
-            "Invalid signature for ",
-            Strings.toHexString(addr)
-        );
-        require(true == addr.isValidSignatureNow(message, signature), erro);
-    }
-
-    /**
-     * todo
-     * - validate if de hashed message sent is equals to bid | ntf id
-     *
-     * function validateMessage(bytes32 message, uint256 rawData) private view {
-     * string memory prefix = "\x19Ethereum Signed Message:\n";
-     * uint256 length = bytes(Strings.toString(rawData)).length;
-     * bytes32 hashMsg = keccak256(abi.encodePacked(prefix, length, rawData));
-     * console.logBytes32(hashMsg);
-     * console.logBytes32(message);
-     *
-     * require(message == hashMsg, "Hash dont match with you data");
-     *}
-     */
 }
