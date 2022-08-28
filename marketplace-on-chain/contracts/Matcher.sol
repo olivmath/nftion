@@ -5,8 +5,6 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/utils/Strings.sol";
-import "hardhat/console.sol";
 
 contract Matcher is Ownable {
     using SignatureChecker for address;
