@@ -14,8 +14,6 @@
 
 ## Understand Problem
 
-[Cheap NFT Marketplace](/assets/Cheap-NFT-Marketplace.pdf)
-
 NFT marketplaces often use techniques for reducing transaction fees.
 Some of these techniques require users to use these marketplaces with an off-chain sibling system that assist the on-chain pieces. In this case you are tasked with designing and building a simple off-chain system and the on-chain smart-contract to enable cheap auctions. The goal is to enable trades between an ERC721 and a ERC20 with a single on-chain transaction.
 The auctions should work as follows
