@@ -13,13 +13,13 @@ describe("Bidder routes", () => {
     }
     test("/bid/{nftId} 201 | should be return 0 if bid greater than the current bid", async () => {
         const bid = 100
-        const response = await request(app)
-            .post("/bid/0xff")
-            .send({
-                bidder: bidder.address,
-                bid: bid,
-                signature: await signMessage(bid)
-            })
+        const payload = {
+            bidder: bidder.address,
+            bid: bid,
+            signature: await signMessage(bid)
+        }
+        console.log(payload)
+        const response = await request(app).post("/bid/0xff").send(payload)
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
             yourBidIndex: 0
@@ -27,13 +27,12 @@ describe("Bidder routes", () => {
     })
     test("/bid/{nftId} 404 | should be fail if bid for less than the current bid", async () => {
         const bid = 1
-        const response = await request(app)
-            .post("/bid/0xff")
-            .send({
-                bidder: bidder.address,
-                bid: bid,
-                signature: await signMessage(bid)
-            })
+        const payload = {
+            bidder: bidder.address,
+            bid: bid,
+            signature: await signMessage(bid)
+        }
+        const response = await request(app).post("/bid/0xff").send(payload)
         expect(response.status).toEqual(404)
         expect(response.body).toEqual({
             message: "1 is insufficient, bid more than 100"
@@ -41,13 +40,12 @@ describe("Bidder routes", () => {
     })
     test("/bid/{nftId} 201 | should be return removed bid of bidder", async () => {
         const putBid = async (bid: number) => {
-            const response = await request(app)
-                .post("/bid/0xff")
-                .send({
-                    bidder: bidder.address,
-                    bid: bid,
-                    signature: await signMessage(bid)
-                })
+            const payload = {
+                bidder: bidder.address,
+                bid: bid,
+                signature: await signMessage(bid)
+            }
+            const response = await request(app).post("/bid/0xff").send(payload)
             expect(response.status).toEqual(201)
             expect(response.body).toEqual({
                 yourBidIndex: 0
@@ -56,13 +54,12 @@ describe("Bidder routes", () => {
         await putBid(107)
         await putBid(701)
 
-        const response = await request(app)
-            .delete("/bid/0xff")
-            .send({
-                bidder: bidder.address,
-                bid: 107,
-                signature: await signMessage(107)
-            })
+        const payload = {
+            bidder: bidder.address,
+            bid: 107,
+            signature: await signMessage(107)
+        }
+        const response = await request(app).delete("/bid/0xff").send(payload)
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
             signature:

@@ -13,14 +13,13 @@ describe("Seller routes", () => {
     }
     test("POST /auction 201 | should be create a new acution", async () => {
         const initPrice = 100
-        const response = await request(app)
-            .post("/auction")
-            .send({
-                initPrice: initPrice,
-                seller: seller.address,
-                nftId: "0xac",
-                signature: await signMessage(initPrice.toString())
-            })
+        const payload = {
+            initPrice: initPrice,
+            seller: seller.address,
+            nftId: "0xac",
+            signature: await signMessage(initPrice.toString())
+        }
+        const response = await request(app).post("/auction").send(payload)
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
             seller: "0xFe32CA2F5278514AAeB6B46Dadb0282f1B916EbA",
@@ -45,13 +44,14 @@ describe("Seller routes", () => {
         expect(closed.status).toEqual(200)
         expect(closed.body.includes("0xff")).toEqual(false)
 
+        const payload = {
+            seller: seller.address,
+            initPrice: 10,
+            signature: await signMessage("10")
+        }
         const response = await request(app)
             .delete("/auction/0xff")
-            .send({
-                seller: seller.address,
-                initPrice: 10,
-                signature: await signMessage("10")
-            })
+            .send(payload)
         expect(response.status).toEqual(201)
         expect(response.body).toEqual({
             seller: "0xFe32CA2F5278514AAeB6B46Dadb0282f1B916EbA",
