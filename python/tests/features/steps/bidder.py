@@ -1,5 +1,6 @@
 from behave import given, when, then
 from eth_account import Account
+from json import loads
 
 
 @given('Bidder with private_key: {private_key}')
@@ -30,3 +31,13 @@ def validate_bid(context, nft: str):
         bid["bid"]
         for bid in list_of_bids
     ]
+
+@then('should return')
+def step_impl(context):
+    response = context.client.post(f"/{context.nft}", {
+        "address": context.bidder.address,
+        "bid": context.bid,
+        "signature": ""
+    }).json()
+
+    assert response == loads(context.text)
