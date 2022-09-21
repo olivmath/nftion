@@ -2,7 +2,6 @@ from behave import given, when, then
 from eth_account import Account
 
 
-
 @given('Seller with private_key: {private_key}')
 def create_seller(context, private_key):
     context.seller: Account = Account().from_key(
@@ -14,10 +13,13 @@ def create_seller(context, private_key):
 @when('he {status} a auction with nft: {nft}, init price: {price}')
 def open_auction(context, status, nft, price):
     # from eth_account.messages import encode_defunct
-    context.nft_seller = {"nft": nft, "init_price": price}
-    context.client.post(f"/{status}", context.nft_seller)
+    context.nft, context.price = nft, price
+    context.client.post(f"/{status}", {
+        "nft": context.nft,
+        "init_price": context.price
+    })
 
 
 @then('should be displayed into the list of {status} auctions')
 def get_status_auctions(context, status):
-    assert "0xac" in context.client.get(f"/{status}").json()
+    assert context.nft in context.client.get(f"/{status}").json()
