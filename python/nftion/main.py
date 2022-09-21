@@ -1,4 +1,6 @@
-from nftion.api.home import hello
+# pylint: disable=no-name-in-module
+
+from nftion.api.auction import open_auctions
 from nftion import app
 
-app.include_router(hello.router)
+app.include_router(open_auctions.router)
