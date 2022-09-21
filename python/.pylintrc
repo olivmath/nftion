@@ -2,6 +2,7 @@
 disable=
     C0411, # wrong-import-order
     C0114, # module docstring 
+    C0116 # missing function docstring
 
 [MAIN]
 

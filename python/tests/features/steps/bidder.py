@@ -2,16 +2,31 @@ from behave import given, when, then
 from eth_account import Account
 
 
-@given('Bidder with private_key: 0x7f27c4189fb97fd29fba63779c2bcfc8bbb066c403d2754abc52283ca502cc4f')
-def step_impl(context):
-    raise NotImplementedError('STEP: Given Bidder with private_key: 0x7f27c4189fb97fd29fba63779c2bcfc8bbb066c403d2754abc52283ca502cc4f')
+@given('Bidder with private_key: {private_key}')
+def create_bidder(context, private_key):
+    context.bidder: Account = Account().from_key(
+        private_key
+    )
+    assert context.bidder.address == "0x0337752bce5c5FBf5906369B04555bb7f4040135"
 
 
-@when('he bid price: 100 at nft: 0xac')
-def step_impl(context):
-    raise NotImplementedError('STEP: When he bid price: 100 at nft: 0xac')
+@when('he bid: {bid} at nft: {nft}')
+def make_bid(context, bid: int, nft: str):
+    context.nft, context.bid = nft, bid
+    context.client.post(f"/{context.nft}", {
+        "address": context.bidder.address,
+        "bid": context.bid,
+        "signature": ""
+    })
 
-
-@then('should be displayed into the bid list of nft: 0xac')
-def step_impl(context):
-    raise NotImplementedError('STEP: Then should be displayed into the bid list of nft: 0xac')
+@then('should be displayed into the bid list of nft: {nft}')
+def validate_bid(context, nft: str):
+    list_of_bids: list = context.client.get(f"/{nft}").json()["bids"]
+    assert context.bidder.addres in [
+        bid["address"]
+        for bid in list_of_bids
+    ]
+    assert context.bid in [
+        bid["bid"]
+        for bid in list_of_bids
+    ]
