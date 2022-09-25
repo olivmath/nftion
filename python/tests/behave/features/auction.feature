@@ -5,15 +5,21 @@ Feature: Auction NFT
 
   Scenario: Open Auctions
     Given that there are open nft auctions
-    When someone accesses the home
+    When someone get this
     Then should return list of ids of open auctions
+    """
+    ["0xff"]
+    """
 
   Scenario: Closed Auctions
     Given that there are closed nft auctions
-    When someone accesses the home
+    When someone get this
     Then should return list of ids of closed auctions
+    """
+    ["0xaa"]
+    """
 
   Scenario: Get data about a specif NFT auction
     Given that there are open nft auctions
-    When someone accesses the page of NFT auction
-    Then should return list of bids of this NFT auctions
+    When someone get 0xff NFT
+    Then should return list of bids of 0xff NFT auction

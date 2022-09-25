@@ -1,35 +1,35 @@
+# pylint: disable=no-name-in-module
+
+from json import loads
 from behave import given, when, then
 
-@given('that there are open nft auctions')
-def open_new_nft_auction(context):
-    raise NotImplementedError('STEP: Given that there are open nft auctions')
+
+@given('that there are {status} nft auctions')
+def open_new_nft_auction(context, status: str):
+    assert len(
+        context.client.get("/open/").json()["open"]
+    ) > 0
+    context.auction_status = status
 
 
-@given('that there are closed nft auctions')
-def closed_nft_auction(context):
-    raise NotImplementedError('STEP: Given that there are closed nft auctions')
-
-
-@when('someone accesses the home')
+@when('someone get this')
 def get_all_open_nft_auction(context):
-    raise NotImplementedError('STEP: When someone accesses the home')
+    context.response = context.client.get(f"/{context.auction_status}/").json()
 
 
-@when('someone accesses the page of NFT auction')
-def get_a_open_nft_auction(context):
-    raise NotImplementedError('STEP: When someone accesses the page of NFT auction')
+@then('should return list of ids of {status} auctions')
+def validate_open_nft_auctions(context, status):
+    expect = loads(context.text)
+    assert expect == context.response[status]
 
 
-@then('should return list of ids of open auctions')
-def validate_open_nft_auctions(context):
-    raise NotImplementedError('STEP: Then should return list of ids of open auctions')
+@when('someone get {nft} NFT')
+def get_a_open_nft_auction(context, nft: str):
+    context.response = context.client.get(f"/{nft}/").json()
 
 
-@then('should return list of ids of closed auctions')
-def validate_bids_of_closed_nft_auction(context):
-    raise NotImplementedError('STEP: Then should return list of ids of closed auctions')
-
-
-@then('should return list of bids of this NFT auctions')
-def validate_bids_of_a_nft_auction(context):
-    raise NotImplementedError('STEP: Then should return list of bids of this NFT auctions')
+@then('should return list of bids of {nft} NFT auction')
+def validate_bids_of_a_nft_auction(context, nft):
+    
+    print(context.response)
+    assert context.response['auction']['nft_id'] == nft
