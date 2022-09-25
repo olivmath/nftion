@@ -5,38 +5,38 @@ from fastapi.responses import JSONResponse
 from fastapi import status
 from nftion.api.auction import router
 from nftion.database.db import all_auctions
-from pydantic import BaseModel, Field
 from typing import List
+from pydantic import BaseModel, Field
 
 
-class OpenAuctions(BaseModel):
+class ClosedAuctions(BaseModel):
     """
-    # Open Auctions model response
+    # Closed Auctions model response
     """
-    open: List[str] = Field(..., description="0xac")
+    closed: List[str] = Field(..., description="0xac")
 
 
 @router.get(
-    path="/open/",
-    description="Show all open NFT auctions",
+    path="/closed/",
+    description="Show all closed NFT auctions",
     status_code=status.HTTP_200_OK,
-    response_model=OpenAuctions
+    response_model=ClosedAuctions
 )
-async def open_nft():
+async def closed_nft():
     """
-    # return all open nft auctions id
+    # return all closed nft auctions id
 
     - the id is same of nft id
     """
 
-    open_auctions = OpenAuctions(
-        open=list(map(
+    closed_auction = ClosedAuctions(
+        closed=list(map(
             lambda auction: auction.nft_id,
-            all_auctions.open_auctions
+            all_auctions.closed_auctions
         ))
     ).dict()
 
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content=open_auctions
+        content=closed_auction
     )
