@@ -40,8 +40,12 @@ class Bid(BaseModel):
 class Auction(BaseModel):
     """
     # Auction of a NFT
+        - initial_price: int
+        - seller: str
+        - nft_id: str
+        - signature: str
     """
-    init_price: int
+    initial_price: int
     seller: str
     nft_id: str
     signature: str
@@ -49,13 +53,21 @@ class Auction(BaseModel):
 
     def __init__(
         self,
+        initial_price: int,
+        seller: str,
+        nft_id: str,
+        signature: str,
         **kwargs
     ) -> None:
         kwargs['bids'] = [Bid(
-            bid=kwargs['init_price'],
-            bidder=kwargs['seller'],
-            signature=kwargs['signature']
+            bid=initial_price,
+            bidder=seller,
+            signature=signature
         )]
+        kwargs['initial_price']: int = initial_price
+        kwargs['seller']: str = seller
+        kwargs['nft_id']: str = nft_id
+        kwargs['signature']: str = signature
         super().__init__(**kwargs)
 
     def add_new_bid(cls, new_bid: Bid):
