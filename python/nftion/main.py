@@ -17,5 +17,5 @@ app.include_router(closed_auctions.router)
 app.include_router(all_auctions.router)
 app.include_router(nft_auction.router)
 
-# app.include_router(open_auction.router)
-# app.include_router(closed_auction.router)
+app.include_router(open_auction.router)
+app.include_router(closed_auction.router)
