@@ -19,7 +19,7 @@ class Bid(BaseModel):
     """
     # Bid
     """
-    bid: int
+    amount: int
     bidder: str
     signature: str
 
@@ -53,6 +53,7 @@ class Auction(BaseModel):
     bids: List[Bid]
     _open: bool = PrivateAttr()
     _end_price: int = PrivateAttr()
+    _bidder: str = PrivateAttr()
 
     def __init__(
         self,
@@ -62,7 +63,9 @@ class Auction(BaseModel):
         signature: str,
         **kwargs
     ) -> None:
-        kwargs['bids'] = []
+        kwargs['bids'] = [
+            Bid(amount=initial_price, bidder=seller, signature=signature)
+        ]
         kwargs['initial_price']: int = initial_price
         kwargs['seller']: str = seller
         kwargs['nft_id']: str = nft_id
@@ -77,6 +80,15 @@ class Auction(BaseModel):
                 f"{new_bid.bid} is insufficient, bid more than {cls.bids[0].bid}"
             )
         cls.bids.insert(0, new_bid)
+
+    def close(cls):
+        cls._end_price = max(bid.amount for bid in cls.bids)
+        cls._open = False
+        cls._bidder = [
+            bid.bidder
+            for bid in cls.bids
+            if bid.amount == cls._end_price
+        ][0]
 
 
 class Auctions(BaseModel):
