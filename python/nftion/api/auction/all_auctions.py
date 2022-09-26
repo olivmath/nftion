@@ -1,7 +1,5 @@
-# pylint: disable=no-name-in-module
-# pylint: disable=too-few-public-methods
+# pylint: disable=protected-access
 
-from fastapi.responses import JSONResponse
 from fastapi import status
 from nftion.api.auction import router
 from nftion.database.db import all_auctions

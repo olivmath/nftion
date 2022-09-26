@@ -1,10 +1,6 @@
-# pylint: disable=no-name-in-module
-# pylint: disable=too-few-public-methods
-
-from fastapi.responses import JSONResponse
-from fastapi import status
-from nftion.api.auction import router
 from nftion.database.db import all_auctions
+from nftion.api.auction import router
+from fastapi import status
 
 
 @router.get(
@@ -22,5 +18,5 @@ async def closed_nft():
     return [
         auction.nft_id
         for auction in all_auctions.auctions
-        if auction._open is not True
+        if auction._open is not True  # pylint: disable=protected-access
     ]

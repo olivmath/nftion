@@ -1,11 +1,8 @@
-# pylint: disable=no-name-in-module
-# pylint: disable=too-few-public-methods
-
-from fastapi.responses import JSONResponse
-from fastapi import status
-from nftion.api.auction import router
 from nftion.database.db import all_auctions
 from nftion.models.auction import Auction
+from nftion.api.auction import router
+from fastapi.responses import JSONResponse
+from fastapi import status
 
 
 @router.get(
@@ -16,9 +13,17 @@ from nftion.models.auction import Auction
 )
 async def open_nft(nft_id: str):
     """
-    # return all open nft auctions id
+    # return specific open nft auction
 
-    - the id is same of nft id
+    ## Auction have
+        - nft_id
+        - initial_price
+        - seller
+        - signature
+        - bids
+            - bidder
+            - bid
+            - signature
     """
 
     auction = [

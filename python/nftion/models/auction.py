@@ -52,6 +52,7 @@ class Auction(BaseModel):
     signature: str
     bids: List[Bid]
     _open: bool = PrivateAttr()
+    _end_price: int = PrivateAttr()
 
     def __init__(
         self,
@@ -68,6 +69,7 @@ class Auction(BaseModel):
         kwargs['signature']: str = signature
         super().__init__(**kwargs)
         self._open: bool = True
+        self._end_price: int = 0
 
     def add_new_bid(cls, new_bid: Bid):
         if cls.bids[0].bid >= new_bid.bid:

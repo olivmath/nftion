@@ -1,8 +1,13 @@
 [MASTER]
 disable=
+    C0415, # import-outside-toplevel
     C0411, # wrong-import-order
+    C0116, # missing function docstring
     C0114, # module docstring 
-    C0116 # missing function docstring
+    R1705, # no else return
+    R1703, # simplifiable if statement
+    R0801, # Similar lines in x files
+    E0611  # no name in module
 
 [MAIN]
 
@@ -419,7 +424,7 @@ ignore-comments=yes
 ignore-docstrings=yes
 
 # Imports are removed from the similarity computation
-ignore-imports=yes
+ignore-imports=no
 
 # Signatures are removed from the similarity computation
 ignore-signatures=yes
