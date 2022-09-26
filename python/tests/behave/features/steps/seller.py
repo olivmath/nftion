@@ -14,11 +14,17 @@ def create_seller(context, private_key):
 def open_auction(context, status, nft, price):
     # from eth_account.messages import encode_defunct
     context.nft, context.price = nft, price
-    context.client.post(f"/{status}", {
-        "nft": context.nft,
-        "init_price": context.price
-    })
+    payload = {
+        "signature": "signdfadfadfasdf",
+        "nft_id": context.nft,
+        "seller": context.seller.address
+    }
+    if status == "open":
+        payload["initial_price"] = price
+    else:
+        payload["end_price"] = price
 
+    context.response = context.client.post(f"/{status}", json=payload).json()
 
 @then('should be displayed into the list of {status} auctions')
 def get_status_auctions(context, status):
