@@ -2,7 +2,7 @@
 # pylint: disable=line-too-long
 
 
-from nftion.models.auction import Auction, Seller, AuctionsOpenClosed
+from nftion.models.auction import Auction, Seller, Auctions
 
 
 # owner_nftion = new ethers.Wallet(
@@ -26,8 +26,8 @@ monkey_auction = Auction(
     initial_price=seller.initial_price + 10
 )
 
+monkey_auction._open = False
 
-all_auctions = AuctionsOpenClosed(
-    open_auctions=[duck_auction],
-    closed_auctions=[monkey_auction]
+all_auctions = Auctions(
+    auctions=[duck_auction, monkey_auction]
 )

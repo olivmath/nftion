@@ -3,24 +3,16 @@
 
 from fastapi.responses import JSONResponse
 from fastapi import status
-from nftion.validation.auction import find_auction
 from nftion.api.auction import router
-from pydantic import BaseModel, Field
-from typing import List
-
-
-class OpenAuctions(BaseModel):
-    """
-    # Open Auctions model response
-    """
-    open: List[str] = Field(..., description="0xac")
+from nftion.database.db import all_auctions
+from nftion.models.auction import Auction
 
 
 @router.get(
     path="/{nft_id}/",
     description="Show all open NFT auctions",
     status_code=status.HTTP_200_OK,
-    response_model=OpenAuctions
+    response_model=Auction
 )
 async def open_nft(nft_id: str):
     """
@@ -28,16 +20,16 @@ async def open_nft(nft_id: str):
 
     - the id is same of nft id
     """
-    auction = find_auction(nft_id)
 
-    if auction['status'] == ('open' or 'closed'):
-        return JSONResponse(
-            status_code=status.HTTP_200_OK,
-            content=auction
-        )
-    else:
+    auction = [
+        auction
+        for auction in all_auctions.auctions
+        if auction.nft_id == nft_id
+    ]
+    if len(auction) == 0:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
-            content=auction
+            content={"message": "NFT auction not found"}
         )
-        
+    else:
+        return auction[0]

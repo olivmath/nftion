@@ -3,7 +3,7 @@
 # pylint: disable=no-self-argument
 
 from typing import List
-from pydantic import BaseModel
+from pydantic import BaseModel, PrivateAttr
 
 
 class Seller(BaseModel):
@@ -44,12 +44,14 @@ class Auction(BaseModel):
         - seller: str
         - nft_id: str
         - signature: str
+        - open: bool
     """
     initial_price: int
     seller: str
     nft_id: str
     signature: str
     bids: List[Bid]
+    _open: bool = PrivateAttr()
 
     def __init__(
         self,
@@ -59,16 +61,13 @@ class Auction(BaseModel):
         signature: str,
         **kwargs
     ) -> None:
-        kwargs['bids'] = [Bid(
-            bid=initial_price,
-            bidder=seller,
-            signature=signature
-        )]
+        kwargs['bids'] = []
         kwargs['initial_price']: int = initial_price
         kwargs['seller']: str = seller
         kwargs['nft_id']: str = nft_id
         kwargs['signature']: str = signature
         super().__init__(**kwargs)
+        self._open: bool = True
 
     def add_new_bid(cls, new_bid: Bid):
         if cls.bids[0].bid >= new_bid.bid:
@@ -78,9 +77,8 @@ class Auction(BaseModel):
         cls.bids.insert(0, new_bid)
 
 
-class AuctionsOpenClosed(BaseModel):
+class Auctions(BaseModel):
     """
     # All Auction open and closed
     """
-    open_auctions: List[Auction]
-    closed_auctions: List[Auction]
+    auctions: List[Auction]
