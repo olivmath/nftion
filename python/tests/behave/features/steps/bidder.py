@@ -3,41 +3,65 @@ from eth_account import Account
 from json import loads
 
 
-@given('Bidder with private_key: {private_key}')
-def create_bidder(context, private_key):
+@given('a open auction nft: {nft}')
+def create_bidder(context, nft: str):
     context.bidder: Account = Account().from_key(
-        private_key
+        "0xc12d5fd82e11119cb6fdeaac20ad8b255fdb208b36d557dd816e2bfd8d831e0b"
     )
-    assert context.bidder.address == "0x0337752bce5c5FBf5906369B04555bb7f4040135"
+    context.nft = nft
+    assert context.client.get(f"/{nft}").json()["nft_id"] == nft
 
 
-@when('he bid: {bid} at nft: {nft}')
-def make_bid(context, bid: int, nft: str):
-    context.nft, context.bid = nft, bid
-    context.client.post(f"/{context.nft}", {
-        "address": context.bidder.address,
-        "bid": context.bid,
-        "signature": ""
-    })
+@given('a bid in bid list of nft: {nft}')
+def put_bid_in_nft_auction(context, nft: str):
+    context.bidder: Account = Account().from_key(
+        "0xc12d5fd82e11119cb6fdeaac20ad8b255fdb208b36d557dd816e2bfd8d831e0b"
+    )
+    context.bid = context.client.post(
+        f"/{nft}",
+        json={
+            "bidder": context.bidder.address,
+            "amount": 100,
+            "signature": "0xaccacacaca"
+        }
+    ).json()
+    context.response = context.client.get(f"/{nft}").json()["bids"]
+    assert context.bid in context.response
 
-@then('should be displayed into the bid list of nft: {nft}')
-def validate_bid(context, nft: str):
-    list_of_bids: list = context.client.get(f"/{nft}").json()["bids"]
-    assert context.bidder.addres in [
-        bid["address"]
-        for bid in list_of_bids
-    ]
-    assert context.bid in [
-        bid["bid"]
-        for bid in list_of_bids
-    ]
+
+@when('bidder send a bid: {bid}')
+def send_bid(context, bid: int):
+    context.bid = context.client.post(
+        f"/{context.nft}",
+        json={
+            "bidder": context.bidder.address,
+            "amount": bid,
+            "signature": "0xaccacacaca"
+        }
+    ).json()
+
+
+@when('bidder send a ask to remove')
+def step_impl(context):
+    context.bid = context.client.delete(
+        f"/{context.nft}",
+        json={
+            "bidder": context.bidder.address,
+            "nft": context.nft,
+            "signature": "0xaccacacaca"
+        }
+    ).json()
+
+
+@then('should {status} are in bid list of nft: {nft}')
+def validate_bid(context, nft: str, status: str):
+    auction = context.client.get(f"/{nft}").json()
+    if status == "not":
+        assert context.bid not in auction["bids"]
+    else:
+        assert context.bid in auction["bids"]
+
 
 @then('should return')
-def step_impl(context):
-    response = context.client.post(f"/{context.nft}", {
-        "address": context.bidder.address,
-        "bid": context.bid,
-        "signature": ""
-    }).json()
-
-    assert response == loads(context.text)
+def validate_return(context):
+    assert context.bid == loads(context.text)
