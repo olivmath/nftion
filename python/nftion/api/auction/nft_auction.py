@@ -1,5 +1,4 @@
 from nftion.database.db import all_auctions
-from nftion.models.auction import Auction
 from nftion.api.auction import router
 from fastapi.responses import JSONResponse
 from fastapi import status
@@ -8,8 +7,7 @@ from fastapi import status
 @router.get(
     path="/{nft_id}",
     description="Show all open NFT auctions",
-    status_code=status.HTTP_200_OK,
-    response_model=Auction
+    status_code=status.HTTP_200_OK
 )
 async def open_nft(nft_id: str):
     """

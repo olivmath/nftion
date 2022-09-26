@@ -4,7 +4,7 @@
 
 from pydantic import BaseModel, PrivateAttr
 from nftion.models.bidder import Bid
-from typing import List
+from typing import List, Optional
 
 
 class Seller(BaseModel):
@@ -53,12 +53,12 @@ class Auction(BaseModel):
         self._open: bool = True
         self._end_price: int = 0
 
-    def add_new_bid(cls, new_bid: Bid):
-        if cls.bids[0].bid >= new_bid.bid:
-            raise Exception(
-                f"{new_bid.bid} is insufficient, bid more than {cls.bids[0].bid}"
-            )
-        cls.bids.insert(0, new_bid)
+    def add_new_bid(cls, new_bid: Bid) -> Optional[int]:
+        if cls.bids[0].amount >= new_bid.amount:
+            return cls.bids[0].amount
+        cls.bids.pop()
+        return cls.bids.append(new_bid)
+
 
     def close(cls):
         cls._end_price = max(bid.amount for bid in cls.bids)
