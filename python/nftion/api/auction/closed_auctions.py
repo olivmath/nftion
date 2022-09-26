@@ -4,7 +4,7 @@ from fastapi import status
 
 
 @router.get(
-    path="/closed/",
+    path="/closed",
     description="Show all closed NFT auctions",
     status_code=status.HTTP_200_OK
 )

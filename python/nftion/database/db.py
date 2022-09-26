@@ -1,6 +1,4 @@
-# pylint: disable=no-name-in-module
 # pylint: disable=line-too-long
-
 
 from nftion.models.auction import Auction, Seller, Auctions
 
@@ -26,6 +24,7 @@ monkey_auction = Auction(
     initial_price=seller.initial_price + 10
 )
 
+# pylint: disable=protected-access
 monkey_auction._open = False
 
 all_auctions = Auctions(
