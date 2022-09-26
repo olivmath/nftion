@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "off-chain",
-    "dateExported": "2022-09-26T03:01:22.250Z",
+    "dateExported": "2022-09-26T18:29:00.403Z",
     "version": "1.1",
     "folders": [
         {
@@ -32,11 +32,11 @@
             "colId": "84ad7cd5-3cab-4497-bcae-4e559e61ea11",
             "containerId": "e6f4d3bc-b4a2-4b19-8cc9-9dc83972e64d",
             "name": "Open Auction",
-            "url": "localhost:8000/",
+            "url": "localhost:8000/0xff",
             "method": "GET",
             "sortNum": 10000,
             "created": "2022-09-25T17:46:34.639Z",
-            "modified": "2022-09-26T02:39:48.241Z",
+            "modified": "2022-09-26T17:17:21.358Z",
             "headers": [],
             "params": [],
             "tests": [
@@ -53,6 +53,25 @@
                     "value": ""
                 }
             ]
+        },
+        {
+            "_id": "8fd586b5-4460-4874-b9d1-78f8945bc4a9",
+            "colId": "84ad7cd5-3cab-4497-bcae-4e559e61ea11",
+            "containerId": "8f881293-2aa1-4280-be5f-6dae338c6455",
+            "name": "put new bid",
+            "url": "localhost:8000/0xff",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2022-09-26T03:16:10.519Z",
+            "modified": "2022-09-26T18:23:38.763Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"signature\": \"string\",\n  \"amount\": 1190,\n  \"bidder\": \"string-999999\"\n}",
+                "form": []
+            },
+            "tests": []
         },
         {
             "_id": "13a5243b-a5d1-435b-a3f8-c96d50a15053",
@@ -213,11 +232,5 @@
             "tests": []
         }
     ],
-    "settings": {
-        "runOptions": {
-            "delay": 0,
-            "iterations": 100,
-            "dataFilePath": ""
-        }
-    }
+    "settings": {}
 }
