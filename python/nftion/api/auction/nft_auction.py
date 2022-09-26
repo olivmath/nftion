@@ -6,7 +6,7 @@ from fastapi import status
 
 
 @router.get(
-    path="/{nft_id}/",
+    path="/{nft_id}",
     description="Show all open NFT auctions",
     status_code=status.HTTP_200_OK,
     response_model=Auction
@@ -34,7 +34,7 @@ async def open_nft(nft_id: str):
     if len(auction) == 0:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
-            content={"message": "NFT auction not found"}
+            content={"message": f"{nft_id} NFT auction not found"}
         )
     else:
         return auction[0]

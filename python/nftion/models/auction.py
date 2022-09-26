@@ -2,8 +2,9 @@
 # pylint: disable=no-name-in-module
 # pylint: disable=no-self-argument
 
-from typing import List
 from pydantic import BaseModel, PrivateAttr
+from nftion.models.bidder import Bid
+from typing import List
 
 
 class Seller(BaseModel):
@@ -13,28 +14,6 @@ class Seller(BaseModel):
     prvk: str = "0x7f27c4189fb97fd29fba63779c2bcfc8bbb066c403d2754abc52283ca502cc4f"
     addr: str = "0xFe32CA2F5278514AAeB6B46Dadb0282f1B916EbA"
     initial_price: int = 10
-
-
-class Bid(BaseModel):
-    """
-    # Bid
-    """
-    amount: int
-    bidder: str
-    signature: str
-
-    # @validator("*")
-    # def validate_signature(cls, v) -> bool:
-    #     return v
-    # @validator("*")
-    # def validate_approved_by_contract(cls, v) -> bool:
-    #     return v
-    # @validator("*")
-    # def validate_balance_of_bidder(cls, v) -> bool:
-    #     return v
-    # @validator("*")
-    # def validate_allowance_of_bidder(cls, v) -> bool:
-    #     return v
 
 
 class Auction(BaseModel):
