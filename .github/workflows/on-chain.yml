@@ -11,10 +11,10 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-on-chain && yarn install -D
+              run: cd on-chain && yarn install -D
 
             - name: Format Checker
-              run: cd marketplace-on-chain && yarn fmtc
+              run: cd on-chain && yarn fmtc
 
     test:
         runs-on: ubuntu-latest
@@ -25,10 +25,10 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-on-chain && yarn install -D
+              run: cd on-chain && yarn install -D
 
             - name: Compile Smart Contract
-              run: cd marketplace-on-chain && yarn c
+              run: cd on-chain && yarn c
 
             - name: Test Smart Contract
-              run: cd marketplace-on-chain && yarn t
+              run: cd on-chain && yarn t

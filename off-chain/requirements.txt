@@ -1,0 +1,6 @@
+requests
+uvicorn
+eth-ape
+fastapi
+behave
+pylint

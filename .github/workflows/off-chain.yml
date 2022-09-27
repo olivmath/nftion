@@ -11,10 +11,10 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-off-chain && yarn install -D
+              run: cd off-chain && pip install -r requirements.txt
 
-            - name: Format Checker
-              run: cd marketplace-off-chain && yarn fmtc
+            - name: Lint Checker
+              run: cd off-chain && pylint nftion
 
     test:
         runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-off-chain && yarn install -D
+              run: cd off-chain && pip install -r requirements.txt
 
             - name: Test off-chain
-              run: cd marketplace-off-chain && yarn t
+              run: cd off-chain && behave tests/behave/features
