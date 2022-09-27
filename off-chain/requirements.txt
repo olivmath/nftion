@@ -1,5 +1,6 @@
+requests
+uvicorn
+eth-ape
 fastapi
 behave
 pylint
-requests
-eth-ape
