@@ -3,6 +3,7 @@ from eth_account import Account
 from json import loads
 
 
+# todo: create a new auction
 @given('a open auction nft: {nft}')
 def create_bidder(context, nft: str):
     context.bidder: Account = Account().from_key(
