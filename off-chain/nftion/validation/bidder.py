@@ -1,6 +1,6 @@
-from nftion.models.bidder import Bid
-from nftion.database.db import all_auctions
 from typing import Optional
+from nftion.database.db import all_auctions
+from nftion.models.bidder import Bid
 
 
 def add_bid(bid: Bid, nft_id: str) -> Optional[int]:
