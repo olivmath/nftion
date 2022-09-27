@@ -28,7 +28,7 @@ jobs:
               run: cd on-chain && yarn install -D
 
             - name: Compile Smart Contract
-              run: cd on-chain && ls -lha && yarn c
+              run: cd on-chain && yarn c
 
             - name: Test Smart Contract
               run: cd on-chain && yarn t
