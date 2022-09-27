@@ -1,13 +1,15 @@
 [MASTER]
 disable=
-    C0415, # import-outside-toplevel
-    C0411, # wrong-import-order
+    C0415, # import outside toplevel
+    C0411, # wrong import order
     C0116, # missing function docstring
     C0114, # module docstring 
+    E0611,  # no name in module
     R1705, # no else return
     R1703, # simplifiable if statement
     R0801, # Similar lines in x files
-    E0611  # no name in module
+    W0613  # unused argument
+
 
 [MAIN]
 

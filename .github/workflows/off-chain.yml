@@ -11,10 +11,10 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-off-chain && yarn install -D
+              run: cd off-chain && poetry install
 
-            - name: Format Checker
-              run: cd marketplace-off-chain && yarn fmtc
+            - name: Lint Checker
+              run: cd off-chain && poetry run lint
 
     test:
         runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
             - uses: actions/setup-node@v3
 
             - name: Install dependencies
-              run: cd marketplace-off-chain && yarn install -D
+              run: cd off-chain && poetry install
 
             - name: Test off-chain
-              run: cd marketplace-off-chain && yarn t
+              run: cd off-chain && poetry run b
